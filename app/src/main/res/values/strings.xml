@@ -4,16 +4,27 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="checkbox_agree">I agreee the termns and conditions</string>
+    <string name="forgot_pass">Forgot your password?</string>
+
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--String related to passChange -->
+    <string name="actual_pass">Actual password</string>
+    <string name="new_pass">New password</string>
+    <string name="confirm_new">Confirm new password</string>
+    <string name="passchange_submit">Change password and sing in</string>
+
+    <!--String related to newPass -->
+    <string name="newPass_message">Please enter below the email that you use for registration,
+    then a new temporal password will be send.</string>
+    <string name="newPass_submit">Send</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
