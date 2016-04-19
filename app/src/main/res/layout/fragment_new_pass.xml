@@ -1,45 +1,116 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     tools:context="com.asat.amesoft.asat.fragments.NewPassFragment">
 
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginTop="16dp"
-            android:text="@string/newPass_message"
-            android:id="@+id/textView"
-            android:layout_gravity="center_horizontal" />
 
-        <android.support.design.widget.TextInputLayout
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:src="@drawable/logo_asat"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:paddingBottom="26dp"
+            />
 
-            <AutoCompleteTextView
-                android:id="@+id/email"
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:background="#FFFFFF"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="16dp"
+                android:text="@string/newPass_message"
+                android:layout_gravity="center_horizontal" />
+
+            <android.support.design.widget.TextInputLayout
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
 
-        </android.support.design.widget.TextInputLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <Button
+                    android:text="@string/newPass_submit"
+                    android:id="@+id/email_sign_in_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
 
+            </LinearLayout>
 
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/email_sign_in_button"
-            style="?android:textAppearanceSmall"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/newPass_submit"
-            android:textStyle="bold"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/copyrigth"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

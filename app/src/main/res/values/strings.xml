@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">ASAT</string>
 
+    <!-- General Strings -->
+    <string name="tittle">ASAT SL</string>
+    <string name="copyrigth">Asat Salud ® 2016 </string>
+
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="checkbox_agree">I agreee the termns and conditions</string>
+    <string name="checkbox_agree">I accept the norms of the LOPD</string>
     <string name="forgot_pass">Forgot your password?</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
@@ -24,6 +29,11 @@
     <string name="newPass_message">Please enter below the email that you use for registration,
     then a new temporal password will be send.</string>
     <string name="newPass_submit">Send</string>
+
+    <!--String related to LOPD -->
+    <string name="lopd_termns">I have read and accept</string>
+    <string name="lopd_accept">Accept</string>
+    <string name="lopd_cancel">Cancel</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
