@@ -7,9 +7,9 @@
 
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="login_user">User</string>
+    <string name="login_password">Password</string>
+    <string name="login_submit">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="checkbox_agree">I accept the norms of the LOPD</string>
     <string name="forgot_pass">Forgot your password?</string>
@@ -20,6 +20,8 @@
     <string name="error_field_required">This field is required</string>
 
     <!--String related to passChange -->
+
+    <string name="email">Email</string>
     <string name="actual_pass">Actual password</string>
     <string name="new_pass">New password</string>
     <string name="confirm_new">Confirm new password</string>

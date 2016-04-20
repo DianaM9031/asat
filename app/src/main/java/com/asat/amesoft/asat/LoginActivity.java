@@ -4,6 +4,8 @@ package com.asat.amesoft.asat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.asat.amesoft.asat.fragments.LOPDFragment;
 import com.asat.amesoft.asat.fragments.LoginFragment;
@@ -12,7 +14,6 @@ import com.asat.amesoft.asat.fragments.PassChangeFragment;
 
 
 public class LoginActivity extends AppCompatActivity {
-
 
 
     @Override
@@ -24,18 +25,27 @@ public class LoginActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putBoolean("accept",true);
 //        Fragment fragment = new LOPDFragment();
-//        Fragment fragment = new LoginFragment();
-        Fragment fragment = new PassChangeFragment();
-        fragment.setArguments(bundle);
+        change_content(new LoginFragment());
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_login,fragment)
-                .commit();
 
 
     }
 
+    public void forgot_pass(View view){
+        change_content(new PassChangeFragment());
+    }
 
+    public void login_submit(View view){
+        change_content(new PassChangeFragment());
+    }
+
+
+
+    private void change_content(Fragment f){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_login,f).addToBackStack(null)
+                .commit();
+    }
 }
 

@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="5"
+            android:layout_weight="6"
             android:background="#FFFFFF"
             >
 
@@ -50,10 +50,10 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email"
+                    android:id="@+id/login_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/login_user"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"/>
@@ -65,10 +65,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/login_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/login_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -79,11 +79,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <CheckBox
+                android:id="@+id/login_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkbox_agree"
                 android:layout_marginTop="10dp"
-                android:id="@+id/checkBox"
+
                 android:layout_gravity="center" />
 
             <LinearLayout
@@ -98,14 +99,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/login_submit"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/action_sign_in"
+                    android:text="@string/login_submit"
                     android:textStyle="bold"
                     android:layout_weight="1"
+                    android:enabled="false"
+                    android:onClick="login_submit"
                     />
                 <Space
                     android:layout_width="0dp"
@@ -121,6 +124,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/forgot_pass"
                 android:id="@+id/forgot_pass"
+                android:onClick="forgot_pass"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
