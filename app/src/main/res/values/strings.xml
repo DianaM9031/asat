@@ -38,5 +38,10 @@
     <string name="lopd_cancel">Cancel</string>
 
 
+    <!--Strins relatet to Messages-->
+    <string name="msg_newpass">You must renew your temporary password</string>
+    <string name="msg_newlopd">Our terms has been updated\n You must read and agree the new norms</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
