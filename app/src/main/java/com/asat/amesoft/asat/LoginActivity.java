@@ -12,7 +12,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
@@ -28,7 +27,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
 
-    String message="";
+    private String token="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +44,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void forgot_pass(View view){
-        change_content(new PassChangeFragment());
+        change_content(new NewPassFragment());
     }
 
     public void login_submit(View view){
         final EditText user = (EditText) findViewById(R.id.login_user);
         final EditText pass = (EditText) findViewById(R.id.login_password);
+
+        //Volley connection
         RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
-
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.login,
                 new Response.Listener<String>(){
 
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","shit  happens");
+                        Log.v("response","Errors  happens");
                     }
                 }
                 )
@@ -84,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void processResponse(String json){
+        Log.v("REALLY OUTSIDE",json);
         JSONObject jsonObject;
         String result="";
         try {
@@ -99,26 +99,30 @@ public class LoginActivity extends AppCompatActivity {
                     change_content(new NewPassFragment());
                 }
                 else {
-                    if (!jsonObject.getBoolean("renew_lopd")) {
+                    if (jsonObject.getBoolean("renew_lopd")) {
                         Snackbar.make(getCurrentFocus(), R.string.msg_newlopd, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        loadLOPD();
+                        loadLOPD(jsonObject.getString("token_id"));
 
                     }
                 }
 
             }
-            Log.v("REALLY OUTSIDE",result);
+            else{
+                Snackbar.make(getCurrentFocus(), jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void loadLOPD(){
-
-        final Bundle args = new Bundle();
+    private void loadLOPD(String token){
+        Bundle args = new Bundle();
         args.putBoolean("accept", true);
+        args.putString("token", token);
 
 
         LOPDFragment f = new LOPDFragment();
@@ -126,9 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         change_content(f);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     private void change_content(Fragment f){
         getSupportFragmentManager()

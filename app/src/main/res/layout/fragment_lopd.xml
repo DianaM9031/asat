@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
 
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/lopd_termns" />
+            android:text="@string/lopd_load" />
     </ScrollView>
 
 
@@ -69,6 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/lopd_accept"
+            android:enabled="false"
             />
 
     </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -26,13 +27,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LOPDFragment extends Fragment {
 
-
     private boolean accept;
+    private CheckBox checkBox;
+    private String token="";
     public LOPDFragment() {
         accept=false;
         // Required empty public constructor
@@ -43,23 +48,31 @@ public class LOPDFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments().getBoolean("accept")){
             this.accept=getArguments().getBoolean("accept");
+            if(!getArguments().getString("token").isEmpty()){
+                this.token=getArguments().getString("token");
+            }
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lopd, container, false);
+
+
+        final View view = inflater.inflate(R.layout.fragment_lopd, container, false);
+
+        final Button submit = (Button) view.findViewById(R.id.lopd_accept);
         final TextView textView = (TextView) view.findViewById(R.id.lopd_terms);
         if(this.accept){
-            Button accept = (Button) view.findViewById(R.id.lopd_cancel);
+            Button cancel = (Button) view.findViewById(R.id.lopd_cancel);
             CheckBox checkBox = (CheckBox) view.findViewById(R.id.lopd_checkbox);
-            accept.setVisibility(View.VISIBLE);
+            cancel.setVisibility(View.VISIBLE);
             checkBox.setVisibility(View.VISIBLE);
         }
 
         RequestQueue requestQueue = VolleySingleton.getsInstance().getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Tools.getLODP,
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, Tools.getLODP,
                 new Response.Listener<String>(){
 
                     @Override
@@ -76,13 +89,77 @@ public class LOPDFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","shit  happens");
+                        Log.v("response","Errors  happens");
                     }
                 }
         );
+        checkBox = (CheckBox) view.findViewById(R.id.lopd_checkbox);
+        checkBox.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                        if(isChecked) {
+                            submit.setEnabled(true);
+                        }
+                        else{
+                            submit.setEnabled(false);
+                        }
+                    }
+                }
+        );
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectAction();
+            }
+        });
+
         requestQueue.add(stringRequest);
 
         return view;
+    }
+
+    private void selectAction(){
+        if(this.accept){
+            connect(this.token);
+        }
+        else{
+            //volver a la pantalla anterior
+            Log.v("BOTON","MODO LECTURA");
+        }
+    }
+
+    private void connect(final String token_id){
+        //Volley connection
+        RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.setLOPD,
+                new Response.Listener<String>(){
+
+                    @Override
+                    public void onResponse(String response) {
+                        //processResponse(response);
+
+                    }
+                },
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("response","Errors  happens");
+                    }
+                }
+        )
+        {
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("token_id",token_id);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
     }
 
 }

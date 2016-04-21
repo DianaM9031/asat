@@ -75,7 +75,10 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                         if(!isEmpty){
-                            submit.setEnabled(true);
+                            if(isChecked)
+                                submit.setEnabled(true);
+                            else
+                                submit.setEnabled(false);
                         }
                     }
                 }

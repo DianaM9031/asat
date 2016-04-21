@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email"
+                    android:id="@+id/new_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
@@ -83,12 +83,13 @@
                     android:layout_weight="1"/>
                 <Button
                     android:text="@string/newPass_submit"
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/new_submit"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_weight="1"
+                    android:enabled="false"
                     />
                 <Space
                     android:layout_width="0dp"

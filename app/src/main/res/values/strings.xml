@@ -4,6 +4,7 @@
     <!-- General Strings -->
     <string name="tittle">ASAT SL</string>
     <string name="copyrigth">Asat Salud ® 2016 </string>
+    <string name="email">Email</string>
 
 
     <!-- Strings related to login -->
@@ -21,7 +22,7 @@
 
     <!--String related to passChange -->
 
-    <string name="email">Email</string>
+    <string name="pass_change_name">User name</string>
     <string name="actual_pass">Actual password</string>
     <string name="new_pass">New password</string>
     <string name="confirm_new">Confirm new password</string>
@@ -31,9 +32,12 @@
     <string name="newPass_message">Please enter below the email that you use for registration,
     then a new temporal password will be send.</string>
     <string name="newPass_submit">Send</string>
+    <string name="pass_not_match">The password doesn\'t match</string>
+
 
     <!--String related to LOPD -->
     <string name="lopd_termns">I have read and accept</string>
+    <string name="lopd_load">Loading...</string>
     <string name="lopd_accept">Accept</string>
     <string name="lopd_cancel">Cancel</string>
 

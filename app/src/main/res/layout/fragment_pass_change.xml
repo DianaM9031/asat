@@ -39,10 +39,24 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="5"
+            android:layout_weight="8"
             android:background="#FFFFFF"
             >
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/pass_change_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pass_change_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -79,6 +93,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+
                     android:id="@+id/confirm_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,11 +116,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/new_pass_submit"
                     style="?android:textAppearanceSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
+                    android:enabled="false"
                     android:text="@string/login_submit"
                     android:textStyle="bold"
                     android:layout_weight="1"
