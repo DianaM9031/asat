@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.HospitalFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hospital"
+            />
+        <ImageView
+            android:id="@+id/hospital_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/hospital_title"
+            android:text="Hospital de prueba"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <ListView
+                android:id="@+id/hospital_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <TextView
+                android:id="@+id/hospital_description"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/hospital_rules"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:background="#FFF000"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:text="@string/hospital_rules"
+
+    />
+
+    <android.support.v4.widget.Space
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/hospital_images"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:background="#000FFF"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:text="@string/hospital_images"/>
+
+
+</LinearLayout>

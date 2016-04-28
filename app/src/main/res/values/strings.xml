@@ -48,4 +48,25 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings related to Menu -->
+    <string-array name="menu_options">
+        <item>My Hospital</item>
+        <item>Histoy</item>
+        <item>Advices</item>
+        <item>Notifications</item>
+        <item>Configuration</item>
+        <item>About it</item>
+    </string-array>
+
+    <!-- Strings relatet to Hospital -->
+    <string name="hospital_rules">Read hospital rules</string>
+    <string name="hospital_images">See hospital images</string>
+
 </resources>

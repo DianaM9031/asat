@@ -1,6 +1,7 @@
 package com.asat.amesoft.asat.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.LoginActivity;
+import com.asat.amesoft.asat.MainActivity;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -56,8 +59,7 @@ public class LOPDFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         final View view = inflater.inflate(R.layout.fragment_lopd, container, false);
@@ -69,6 +71,12 @@ public class LOPDFragment extends Fragment {
             CheckBox checkBox = (CheckBox) view.findViewById(R.id.lopd_checkbox);
             cancel.setVisibility(View.VISIBLE);
             checkBox.setVisibility(View.VISIBLE);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().popBackStack();
+                }
+            });
         }
 
         RequestQueue requestQueue = VolleySingleton.getsInstance().getRequestQueue();
@@ -115,6 +123,8 @@ public class LOPDFragment extends Fragment {
             }
         });
 
+
+
         requestQueue.add(stringRequest);
 
         return view;
@@ -123,10 +133,13 @@ public class LOPDFragment extends Fragment {
     private void selectAction(){
         if(this.accept){
             connect(this.token);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            //falta pasar parametros
         }
         else{
             //volver a la pantalla anterior
-            Log.v("BOTON","MODO LECTURA");
+            getFragmentManager().popBackStack();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.asat.amesoft.asat;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void forgot_pass(View view){
-        change_content(new NewPassFragment());
+//        change_content(new NewPassFragment());
+        change_content(new PassChangeFragment());
     }
 
     public void login_submit(View view){
@@ -92,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             result = jsonObject.getJSONObject("response").get("result").toString();
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
+                this.token=jsonObject.getString("token_id");
                 if(jsonObject.getBoolean("renew_pass")){
                     Snackbar.make(getCurrentFocus(), R.string.msg_newpass, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -102,8 +105,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (jsonObject.getBoolean("renew_lopd")) {
                         Snackbar.make(getCurrentFocus(), R.string.msg_newlopd, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        loadLOPD(jsonObject.getString("token_id"));
-
+                        loadLOPD(this.token);
+                    }
+                    else{
+                        Log.v("Test token",this.token);
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.putExtra("token",this.token);
+                        startActivity(intent);
                     }
                 }
 
