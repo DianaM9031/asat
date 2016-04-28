@@ -56,14 +56,12 @@
     <string name="action_settings">Settings</string>
 
     <!-- Strings related to Menu -->
-    <string-array name="menu_options">
-        <item>My Hospital</item>
-        <item>Histoy</item>
-        <item>Advices</item>
-        <item>Notifications</item>
-        <item>Configuration</item>
-        <item>About it</item>
-    </string-array>
+    <string name="menu_hospital">My hospital</string>
+    <string name="menu_record">My record</string>
+    <string name="menu_advices">Advices</string>
+    <string name="menu_notifications">Notifications</string>
+    <string name="menu_config">Settings</string>
+    <string name="menu_about">About</string>
 
     <!-- Strings relatet to Hospital -->
     <string name="hospital_rules">Read hospital rules</string>
