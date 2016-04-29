@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void forgot_pass(View view){
 //        change_content(new NewPassFragment());
-        change_content(new PassChangeFragment());
+        change_content(new NewPassFragment());
     }
 
     public void login_submit(View view){

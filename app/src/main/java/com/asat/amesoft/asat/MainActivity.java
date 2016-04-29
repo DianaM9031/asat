@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.asat.amesoft.asat.fragments.HospitalFragment;
+import com.asat.amesoft.asat.fragments.HospitalRulesFragment;
 import com.asat.amesoft.asat.fragments.MenuFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -48,8 +49,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void goHospital(View view){
-        change_content(new HospitalFragment(),token);
+        change_content(new HospitalFragment(),"token",token);
     }
+
+    public void goRules(View view){
+        change_content(new HospitalRulesFragment(),"token",token);
+
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -114,9 +122,9 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content_main,f).addToBackStack(null)
                 .commit();
     }
-    private void change_content(Fragment f,String arg){
+    private void change_content(Fragment f,String id,String arg){
         Bundle args = new Bundle();
-        args.putString("token",arg);
+        args.putString(id,arg);
         f.setArguments(args);
         change_content(f);
     }
