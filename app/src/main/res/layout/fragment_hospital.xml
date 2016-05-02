@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#FFFFFF"
+        android:background="@drawable/asat_layout"
         android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -82,7 +82,6 @@
         android:id="@+id/hospital_rules"
         android:padding="5dp"
         android:layout_gravity="center"
-        android:background="#6DDA98"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.35"
@@ -99,7 +98,6 @@
         android:id="@+id/hospital_images"
         android:padding="5dp"
         android:layout_gravity="center"
-        android:background="#6DDA98"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.35"

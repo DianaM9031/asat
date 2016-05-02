@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.asat.amesoft.asat.fragments.HospitalFragment;
 import com.asat.amesoft.asat.fragments.HospitalRulesFragment;
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         token=getIntent().getStringExtra("token");
 
 

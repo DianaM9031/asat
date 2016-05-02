@@ -41,7 +41,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="6"
-            android:background="#FFFFFF"
+            android:background="@drawable/login_layout"
             >
 
 
@@ -100,7 +100,7 @@
                     android:layout_weight="1"/>
                 <Button
                     android:id="@+id/login_submit"
-                    style="?android:textAppearanceSmall"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
