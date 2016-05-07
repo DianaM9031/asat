@@ -7,6 +7,7 @@
 
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/hospital"
         android:layout_width="wrap_content"
@@ -25,6 +26,7 @@
         android:id="@+id/menu_hospital" />
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/history"
         android:layout_width="wrap_content"
@@ -42,6 +44,7 @@
         android:id="@+id/menu_record" />
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/advises"
         android:layout_width="wrap_content"
@@ -56,6 +59,7 @@
         android:id="@+id/menu_advices" />
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/menu_notifications"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/notifications"
@@ -70,6 +74,7 @@
         android:layout_alignStart="@+id/menu_record" />
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/configure"
         android:layout_width="wrap_content"
@@ -85,6 +90,7 @@
         android:layout_marginTop="55dp" />
 
     <Button
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/menu_about"
         android:background="@android:color/transparent"
         android:drawableTop="@drawable/about"

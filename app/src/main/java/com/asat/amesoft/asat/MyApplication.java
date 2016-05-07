@@ -10,10 +10,22 @@ public class MyApplication extends Application {
 
     private static MyApplication sInstance;
 
+
+
+    private static String token;
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance=this;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        MyApplication.token = token;
     }
 
     public static  MyApplication getsInstance(){

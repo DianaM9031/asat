@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:weightSum="10"
-    android:background="#FFFFFF"
+    android:background="@drawable/asat_layout"
     >
 
 
@@ -23,9 +23,10 @@
         android:layout_gravity="center_horizontal|top" />
 
     <ScrollView
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="8"
         >
         <TextView
             android:id="@+id/lopd_terms"
@@ -52,12 +53,12 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:paddingBottom="15dp">
 
         <Button
             android:id="@+id/lopd_cancel"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lopd_cancel"
             android:visibility="gone"
@@ -65,11 +66,11 @@
 
         <Button
             android:id="@+id/lopd_accept"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lopd_accept"
             android:enabled="false"
+
             />
 
     </LinearLayout>

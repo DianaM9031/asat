@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#FFFFFF"
+        android:background="@drawable/asat_layout"
         android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,6 +46,7 @@
         <TextView
             android:id="@+id/rules_title"
             android:text=""
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -56,7 +57,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="6">
 
             <TextView
                 android:id="@+id/rules_rules"

@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.asat.amesoft.asat.MainActivity;
+import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 
 
@@ -27,6 +30,7 @@ public class LoginFragment extends Fragment {
     private Button submit;
     private boolean isEmpty =true;
     private CheckBox checkBox;
+
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,7 +72,7 @@ public class LoginFragment extends Fragment {
 
         user.addTextChangedListener(textWatcher);
         pass.addTextChangedListener(textWatcher);
-
+        submit = (Button) view.findViewById(R.id.login_submit);
         checkBox = (CheckBox) view.findViewById(R.id.login_checkbox);
         checkBox.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
@@ -83,7 +87,23 @@ public class LoginFragment extends Fragment {
                     }
                 }
         );
-        submit = (Button) view.findViewById(R.id.login_submit);
+
+        TextView lopd = (TextView) view.findViewById(R.id.login_lopd);
+        lopd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putBoolean("accept", false);
+                LOPDFragment f = new LOPDFragment();
+                f.setArguments(args);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_login,f)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 

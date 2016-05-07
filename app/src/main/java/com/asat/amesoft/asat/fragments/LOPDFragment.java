@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.LoginActivity;
 import com.asat.amesoft.asat.MainActivity;
+import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -49,11 +50,9 @@ public class LOPDFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        token = MyApplication.getToken();
         if(getArguments().getBoolean("accept")){
             this.accept=getArguments().getBoolean("accept");
-            if(!getArguments().getString("token").isEmpty()){
-                this.token=getArguments().getString("token");
-            }
         }
 
     }
@@ -72,6 +71,15 @@ public class LOPDFragment extends Fragment {
             cancel.setVisibility(View.VISIBLE);
             checkBox.setVisibility(View.VISIBLE);
             cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().popBackStack();
+                }
+            });
+        }
+        else{
+            submit.setEnabled(true);
+            submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getFragmentManager().popBackStack();

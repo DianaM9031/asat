@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +25,14 @@ import com.asat.amesoft.asat.fragments.MenuFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String token="";
+    public static String token="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        token=getIntent().getStringExtra("token");
-
+        //token=getIntent().getStringExtra("token");
+        token = MyApplication.getToken();
+        Log.v("STATIC TOKEN",token);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,17 +48,26 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        change_content(new MenuFragment());
+        change_content(new MenuFragment(),false);
 
 
     }
 
     public void goHospital(View view){
-        change_content(new HospitalFragment(),"token",token);
+        Log.v("STATIC TOKEN",token);
+        Bundle args = new Bundle();
+        args.putString("token",token);
+        Fragment f = new HospitalFragment();
+        f.setArguments(args);
+        change_content(f,true);
     }
 
     public void goRules(View view){
-        change_content(new HospitalRulesFragment(),"token",token);
+        Bundle args = new Bundle();
+        args.putString("token",token);
+        Fragment f = new HospitalRulesFragment();
+        f.setArguments(args);
+        change_content(f,true);
 
     }
 
@@ -117,17 +130,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void change_content(Fragment f){
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_main,f).addToBackStack(null)
-                .commit();
+    private void change_content(Fragment f, boolean back){
+        FragmentTransaction ft;
+        ft=getSupportFragmentManager().beginTransaction().replace(R.id.content_main,f);
+        if(back){
+            ft.addToBackStack(null).commit();
+        }
+        else{
+         ft.commit(); //
+        }
     }
-    private void change_content(Fragment f,String id,String arg){
-        Bundle args = new Bundle();
-        args.putString(id,arg);
-        f.setArguments(args);
-        change_content(f);
-    }
+
 
 }

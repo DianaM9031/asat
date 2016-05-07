@@ -3,10 +3,12 @@ package com.asat.amesoft.asat.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 
 /**

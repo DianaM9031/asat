@@ -3,11 +3,16 @@ package com.asat.amesoft.asat;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,8 +32,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-    private String token="";
+    RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +40,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
 
+        layout = (RelativeLayout) findViewById(R.id.content_login);
         Bundle bundle = new Bundle();
         bundle.putBoolean("accept",true);
-        change_content(new LoginFragment());
+        change_content(new LoginFragment(),false);
 
 
 
     }
 
     public void forgot_pass(View view){
-//        change_content(new NewPassFragment());
-        change_content(new NewPassFragment());
+        change_content(new NewPassFragment(),true);
     }
 
     public void login_submit(View view){
+
         final EditText user = (EditText) findViewById(R.id.login_user);
         final EditText pass = (EditText) findViewById(R.id.login_password);
 
@@ -94,30 +99,32 @@ public class LoginActivity extends AppCompatActivity {
             result = jsonObject.getJSONObject("response").get("result").toString();
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
-                this.token=jsonObject.getString("token_id");
+                String token=jsonObject.getString("token_id");
+                MyApplication.setToken(token);
                 if(jsonObject.getBoolean("renew_pass")){
-                    Snackbar.make(getCurrentFocus(), R.string.msg_newpass, Snackbar.LENGTH_LONG)
+                    Snackbar.make(layout, R.string.msg_newpass, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-                    change_content(new NewPassFragment());
+                    change_content(new NewPassFragment(),true);
                 }
                 else {
                     if (jsonObject.getBoolean("renew_lopd")) {
-                        Snackbar.make(getCurrentFocus(), R.string.msg_newlopd, Snackbar.LENGTH_LONG)
+                        Snackbar.make(layout, R.string.msg_newlopd, Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
-                        loadLOPD(this.token);
+                        Bundle args = new Bundle();
+                        args.putBoolean("accept", true);
+                        LOPDFragment f = new LOPDFragment();
+                        f.setArguments(args);
+                        change_content(f,true);
                     }
                     else{
-                        Log.v("Test token",this.token);
-                        Intent intent = new Intent(this, MainActivity.class);
-                        intent.putExtra("token",this.token);
-                        startActivity(intent);
+                        loadMenu(token);
                     }
                 }
 
             }
             else{
-                Snackbar.make(getCurrentFocus(), jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_LONG)
+                Snackbar.make(layout, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
 
@@ -127,23 +134,22 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loadLOPD(String token){
-        Bundle args = new Bundle();
-        args.putBoolean("accept", true);
-        args.putString("token", token);
-
-
-        LOPDFragment f = new LOPDFragment();
-        f.setArguments(args);
-        change_content(f);
+    private void loadMenu(String token){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("token",token);
+        startActivity(intent);
     }
 
 
-    private void change_content(Fragment f){
-        getSupportFragmentManager()
+    private void change_content(Fragment f, boolean back){
+        FragmentTransaction ft = getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_login,f).addToBackStack(null)
-                .commit();
+                .replace(R.id.content_login,f);
+        if(back) {
+            ft.addToBackStack(null).commit();
+        }else{
+            ft.commit();
+        }
     }
 
 

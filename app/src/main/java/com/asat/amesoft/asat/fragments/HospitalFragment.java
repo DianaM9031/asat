@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.MainActivity;
+import com.asat.amesoft.asat.Models.Hos_itemAdapter;
 import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
@@ -165,8 +166,6 @@ public class HospitalFragment extends Fragment {
                     images.setVisibility(View.VISIBLE);
                 }
 
-//Necesito saber el encode de la imagen para mostrarla
-
                 icon.setImageBitmap(decodeImage(center_logo));
 
                 ArrayList<Hospital_Item> lista = new ArrayList<>();
@@ -179,10 +178,12 @@ public class HospitalFragment extends Fragment {
 
                     lista.add(new Hospital_Item(
                             item.getString("item_text"),
-//                            decodeImage(item.getString("item_icon"))
-                            null
+                            decodeImage(item.getString("item_icon"))
                     ));
                 }
+
+                //ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listaString);
                 listView.setAdapter(adapter);
                 //cargar datos en el list
@@ -194,9 +195,13 @@ public class HospitalFragment extends Fragment {
     }
 
     private Bitmap decodeImage(String encoded){
-        Log.v("EncodedImage",encoded);
-        Log.v("EncodedImage",encoded.substring(encoded.length()/2,encoded.length()-1));
-                byte[] decodedImage = Base64.decode(encoded,Base64.CRLF);
-                return BitmapFactory.decodeByteArray(decodedImage,0,decodedImage.length);
+        Log.v("ICON",encoded);
+        if(!encoded.contains("http")) {
+            byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
+
+            return BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
+        }else{
+            return null;
+        }
     }
 }
