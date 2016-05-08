@@ -29,6 +29,7 @@ public class LoginFragment extends Fragment {
     private EditText user,pass;
     private Button submit;
     private boolean isEmpty =true;
+    private boolean isCheck =false;
     private CheckBox checkBox;
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -52,9 +53,14 @@ public class LoginFragment extends Fragment {
 
         if(this.user.getText().toString().equals("") || this.pass.getText().toString().equals("")){
             isEmpty=true;
+                submit.setEnabled(false);
         }
         else{
             isEmpty=false;
+            if(isCheck)
+                submit.setEnabled(true);
+            else
+                submit.setEnabled(false);
         }
     }
 
@@ -78,12 +84,11 @@ public class LoginFragment extends Fragment {
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                        if(!isEmpty){
-                            if(isChecked)
-                                submit.setEnabled(true);
-                            else
-                                submit.setEnabled(false);
-                        }
+                        isCheck=isChecked;
+                        if(isCheck && !isEmpty)
+                            submit.setEnabled(true);
+                        else
+                            submit.setEnabled(false);
                     }
                 }
         );

@@ -174,17 +174,18 @@ public class HospitalFragment extends Fragment {
                 for(int i=0; i<lst_contact.length();i++){
                     JSONObject item = lst_contact.getJSONObject(i).getJSONObject("item");
 
-                    listaString.add(item.getString("item_text"));
+//                    listaString.add(item.getString("item_text"));
 
                     lista.add(new Hospital_Item(
-                            item.getString("item_text"),
-                            decodeImage(item.getString("item_icon"))
+                            item.getString("item_text"),null
+//                            decodeImage(item.getString("item_icon"))
                     ));
+                    Log.v("ICON",item.getString("item_icon"));
                 }
 
-                //ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
+                ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listaString);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listaString);
                 listView.setAdapter(adapter);
                 //cargar datos en el list
 

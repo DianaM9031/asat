@@ -23,18 +23,34 @@ public class Hos_itemAdapter extends ArrayAdapter<Hospital_Item> {
 
     }
 
+    class ViewHolder{
+        TextView text;
+        ImageView icon;
+        public ViewHolder(View view) {
+            text = (TextView) view.findViewById(R.id.hospital_row_text);
+            icon = (ImageView) view.findViewById(R.id.hos_row_image);
+        }
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        LayoutInflater inflater = LayoutInflater.from(MyApplication.getAppContext());
-        View view = inflater.inflate(R.layout.row_hospital,parent,false);
+        View view = convertView;
+        ViewHolder holder = null;
+        if (view == null){
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            view = inflater.inflate(R.layout.row_hospital, parent, false);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
+        }
+        else{
+            holder = (ViewHolder) view.getTag();
+        }
 
         Hospital_Item item = getItem(position);
-        TextView text = (TextView) view.findViewById(R.id.hospital_row_text);
-        ImageView icon = (ImageView) view.findViewById(R.id.hos_row_image);
-        text.setText(item.getText());
+
+        holder.text.setText(item.getText());
         if(item.getIcon()!=null) {
-            icon.setImageBitmap(item.getIcon());
+            holder.icon.setImageBitmap(item.getIcon());
         }
 
         return view;

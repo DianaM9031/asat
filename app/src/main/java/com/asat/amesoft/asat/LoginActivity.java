@@ -1,6 +1,7 @@
 package com.asat.amesoft.asat;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    RelativeLayout layout;
+    CoordinatorLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
 
-        layout = (RelativeLayout) findViewById(R.id.content_login);
+        layout = (CoordinatorLayout) findViewById(R.id.content_login);
         Bundle bundle = new Bundle();
         bundle.putBoolean("accept",true);
         change_content(new LoginFragment(),false);
