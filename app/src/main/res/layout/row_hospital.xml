@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/hospital_row_icon"
-        android:src="@drawable/dot"
         android:layout_width="15dp"
         android:layout_height="15dp" />
     <TextView

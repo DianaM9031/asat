@@ -22,7 +22,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MainActivity;
 import com.asat.amesoft.asat.Models.Hos_itemAdapter;
 import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.R;
@@ -81,15 +80,33 @@ public class HospitalFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.hospital_listView);
         connect(this.token,Tools.hospital);
 
+        images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment f = new HospitalImagesFragment();
+
+                Bundle args = new Bundle();
+                args.putString("title",center_title);
+                args.putString("hospital",center_id);
+
+                f.setArguments(args);
+
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_main,f).addToBackStack(null)
+                        .commit();
+            }
+        });
         rules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HospitalRulesFragment f = new HospitalRulesFragment();
+                Fragment f = new HospitalRulesFragment();
 
                 Bundle args = new Bundle();
-                args.putString("token",token);
                 args.putString("title",center_title);
                 args.putString("hospital",center_id);
+
                 f.setArguments(args);
 
                 getActivity()
@@ -105,7 +122,7 @@ public class HospitalFragment extends Fragment {
 
     private void connect(final String token_id,String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -165,44 +182,28 @@ public class HospitalFragment extends Fragment {
                 if(jsonObject.getBoolean("center_hasImages")){
                     images.setVisibility(View.VISIBLE);
                 }
-
+                //se cambia el logo del hospital luego de decodificar la imagen
                 icon.setImageBitmap(decodeImage(center_logo));
 
                 ArrayList<Hospital_Item> lista = new ArrayList<>();
-                ArrayList<String> listaString = new ArrayList<>();
                 JSONArray lst_contact = jsonObject.getJSONArray("lst_contact");
                 for(int i=0; i<lst_contact.length();i++){
                     JSONObject item = lst_contact.getJSONObject(i).getJSONObject("item");
-
-//                    listaString.add(item.getString("item_text"));
-
                     lista.add(new Hospital_Item(
-                            item.getString("item_text"),null
-//                            decodeImage(item.getString("item_icon"))
+                            item.getString("item_text"),item.getString("item_icon")
                     ));
-                    Log.v("ICON",item.getString("item_icon"));
                 }
-
                 ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
-
-//                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listaString);
                 listView.setAdapter(adapter);
-                //cargar datos en el list
-
             }
         } catch (JSONException e) {
 
         }
     }
 
-    private Bitmap decodeImage(String encoded){
-        Log.v("ICON",encoded);
-        if(!encoded.contains("http")) {
-            byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
 
+    private Bitmap decodeImage(String encoded){
+            byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
             return BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
-        }else{
-            return null;
-        }
     }
 }

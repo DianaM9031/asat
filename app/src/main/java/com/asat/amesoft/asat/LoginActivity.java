@@ -10,9 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,7 +21,7 @@ import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
 import com.asat.amesoft.asat.fragments.LoginFragment;
 import com.asat.amesoft.asat.fragments.NewPassFragment;
-import com.asat.amesoft.asat.fragments.PassChangeFragment;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -60,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText pass = (EditText) findViewById(R.id.login_password);
 
         //Volley connection
-        RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.login,
                 new Response.Listener<String>(){
 

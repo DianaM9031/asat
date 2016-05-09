@@ -6,11 +6,19 @@ import android.graphics.Bitmap;
  * Created by Jorge on 28/04/2016.
  */
 public class Hospital_Item {
-    private Bitmap icon;
+    private String icon;
     private String text;
 
-    public Hospital_Item(String text, Bitmap icon) {
+    public Hospital_Item(String text, String icon) {
+        this.icon = icon;
         this.text = text;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
@@ -20,13 +28,5 @@ public class Hospital_Item {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Bitmap getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Bitmap icon) {
-        this.icon = icon;
     }
 }

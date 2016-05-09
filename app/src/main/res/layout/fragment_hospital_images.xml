@@ -8,7 +8,7 @@
     android:paddingTop="30dp"
     android:paddingBottom="25dp"
     android:background="@drawable/fondo_menu"
-    tools:context=".fragments.HospitalFragment">
+    tools:context="com.asat.amesoft.asat.fragments.HospitalImagesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,38 +35,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:background="@drawable/asat_layout"
-        android:padding="15dp"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:id="@+id/rules_title"
-            android:text=""
-            android:textStyle="bold"
+        android:layout_weight="4">
+        <ListView
+            android:id="@+id/hospital_images_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
+            android:layout_height="match_parent">
+        </ListView>
 
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6">
-
-            <TextView
-                android:id="@+id/rules_rules"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp" />
-        </ScrollView>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>
-

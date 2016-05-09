@@ -101,7 +101,7 @@ public class PassChangeFragment extends Fragment {
 
     private void connect(){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.change_pass,
                 new Response.Listener<String>(){
 

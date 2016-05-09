@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -84,7 +83,7 @@ public class NewPassFragment extends Fragment {
 
     private void connect(final String token_id){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getsInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.newPass,
                 new Response.Listener<String>(){
 

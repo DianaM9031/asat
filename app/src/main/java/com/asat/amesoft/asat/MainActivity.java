@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         //token=getIntent().getStringExtra("token");
         token = MyApplication.getToken();
-        Log.v("STATIC TOKEN",token);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

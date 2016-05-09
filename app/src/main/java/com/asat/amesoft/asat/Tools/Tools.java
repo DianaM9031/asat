@@ -13,5 +13,6 @@ public class Tools {
     public static final String newPass = baseURL+"newPass";
     public static final String hospital = baseURL+"getCenterDetail";
     public static final String hospitalRules = baseURL+"getCenterRules";
+    public static final String hospitalImages = baseURL+"getCenterImages";
 
 }
