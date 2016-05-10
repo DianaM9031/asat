@@ -40,15 +40,19 @@ public class LOPDFragment extends Fragment {
     private boolean accept;
     private CheckBox checkBox;
     private String token="";
+    private String version="";
+
+
+
     public LOPDFragment() {
         accept=false;
-        // Required empty public constructor
+        token = MyApplication.getToken();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        token = MyApplication.getToken();
+
         if(getArguments().getBoolean("accept")){
             this.accept=getArguments().getBoolean("accept");
         }
@@ -77,6 +81,7 @@ public class LOPDFragment extends Fragment {
         }
         else{
             submit.setEnabled(true);
+            submit.setText(getResources().getString(R.string.lopd_back));
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,6 +89,7 @@ public class LOPDFragment extends Fragment {
                 }
             });
         }
+
 
         RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, Tools.getLODP,
@@ -94,6 +100,7 @@ public class LOPDFragment extends Fragment {
 
                         try {
                             textView.setText(Html.fromHtml(new JSONObject(response).getString("disclaimer_text")));
+                            setVersion(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -136,12 +143,22 @@ public class LOPDFragment extends Fragment {
         return view;
     }
 
+    public void setVersion(String version) {
+        String aux="";
+        try {
+            aux=new JSONObject(version).getString("disclaimer_version");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.v("LOPD ACCEPT",aux);
+        this.version = aux;
+    }
+
     private void selectAction(){
         if(this.accept){
-            connect(this.token);
+            connect(Tools.setLOPD);
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            //falta pasar parametros
         }
         else{
             //volver a la pantalla anterior
@@ -149,23 +166,23 @@ public class LOPDFragment extends Fragment {
         }
     }
 
-    private void connect(final String token_id){
-        //Volley connection
+
+
+    private void connect(String uri){
         RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.setLOPD,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
                     @Override
                     public void onResponse(String response) {
-                        //processResponse(response);
-
+                        Log.v("Record response",response);
                     }
                 },
                 new Response.ErrorListener(){
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","Errors  happens");
+                        Log.v("response","Errors  happens RecordF"+error);
                     }
                 }
         )
@@ -173,12 +190,13 @@ public class LOPDFragment extends Fragment {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String,String>();
-                params.put("token_id",token_id);
+                params.put("token_id",token);
+                params.put("disclaimer_version",version);
                 return params;
             }
         };
         queue.add(stringRequest);
-
     }
+
 
 }

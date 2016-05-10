@@ -30,7 +30,16 @@
             android:scaleY="0.6"
             android:paddingBottom="26dp"
             />
-
+        <TextView
+            android:text="@string/login_box"
+            android:textStyle="bold"
+            android:textColor="@color/colorBackground"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:background="@drawable/login_box"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"/>
         <LinearLayout
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -40,7 +49,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="8"
-            android:background="#FFFFFF"
+            android:background="@drawable/asat_layout"
             >
 
             <android.support.design.widget.TextInputLayout
@@ -136,6 +145,7 @@
         </LinearLayout>
 
         <TextView
+            android:textColor="@color/colorBackground"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

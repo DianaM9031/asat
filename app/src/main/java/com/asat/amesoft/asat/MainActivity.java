@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import com.asat.amesoft.asat.fragments.HospitalFragment;
 import com.asat.amesoft.asat.fragments.HospitalRulesFragment;
 import com.asat.amesoft.asat.fragments.MenuFragment;
+import com.asat.amesoft.asat.fragments.RecordFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,9 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        change_content(new MenuFragment(),false);
-
+        if(savedInstanceState==null) {
+            change_content(new MenuFragment(), false);
+        }
+        //token=token.replace("K","q");
 
     }
 
@@ -70,6 +72,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void goRecord(View view){
+        Fragment f = new RecordFragment();
+        change_content(f,true);
+    }
 
 
     @Override

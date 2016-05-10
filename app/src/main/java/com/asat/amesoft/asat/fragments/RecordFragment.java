@@ -1,19 +1,15 @@
 package com.asat.amesoft.asat.fragments;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.Models.Adapters.Hos_ImageItemAdapter;
+import com.asat.amesoft.asat.Models.Adapters.Rec_ItemAdapter;
 import com.asat.amesoft.asat.Models.Hospital_ImageItem;
+import com.asat.amesoft.asat.Models.Record_Item;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
@@ -31,45 +29,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HospitalImagesFragment extends Fragment {
+public class RecordFragment extends Fragment {
+    String token;
+    ListView listView;
 
-    String token,Stitle,hospital;
-    GridView listView;
-    TextView title;
-
-    public HospitalImagesFragment() {
+    public RecordFragment() {
         // Required empty public constructor
-        this.token = MyApplication.getToken();
+        this.token= MyApplication.getToken();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (!getArguments().getString("title").isEmpty()) {
-            this.Stitle = getArguments().getString("title");
-        }
-        if (!getArguments().getString("hospital").isEmpty()) {
-            this.hospital = getArguments().getString("hospital");
-        }
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        connect(this.token, Tools.hospitalImages);
-        View view = inflater.inflate(R.layout.fragment_hospital_images, container, false);
-        listView = (GridView) view.findViewById(R.id.hospital_images_list);
-        title = (TextView) view.findViewById(R.id.hospital_images_title);
-        title.setText(Stitle);
+        View view = inflater.inflate(R.layout.fragment_record, container, false);
+        listView = (ListView) view.findViewById(R.id.record_list);
+        connect(this.token, Tools.record);
         return view;
     }
 
@@ -80,6 +66,7 @@ public class HospitalImagesFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
+                        Log.v("Record response",response);
                         processResponse(response);
                     }
                 },
@@ -87,7 +74,7 @@ public class HospitalImagesFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","Errors  happens "+error);
+                        Log.v("response","Errors  happens RecordF"+error);
                     }
                 }
         )
@@ -96,12 +83,10 @@ public class HospitalImagesFragment extends Fragment {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("token_id",token_id);
-                params.put("center_id",hospital);
                 return params;
             }
         };
         queue.add(stringRequest);
-
     }
 
     private void processResponse(String response) {
@@ -112,29 +97,36 @@ public class HospitalImagesFragment extends Fragment {
         try {
             jsonObject = new JSONObject(response);
             result = jsonObject.getJSONObject("response").get("result").toString();
-            //Si el resultado de la consulta esta bien
+
             if(result.equals("OK")){
-                ArrayList<Hospital_ImageItem> lista = new ArrayList<>();
-                JSONArray images = jsonObject.getJSONArray("lst_images");
+                ArrayList<Record_Item> lista = new ArrayList<>();
+                JSONArray images = jsonObject.getJSONArray("anamnesis");
                 for(int i=0; i<images.length(); i++){
-                    JSONObject item = images.getJSONObject(i).getJSONObject("item_img");
+                    JSONObject item = images.getJSONObject(i).getJSONObject("anam_item");
+                    String fecha = item.getString("anam_date");
+                    //fecha=fecha.substring(0,fecha.length()-3);
+
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+                    Date date = formatter.parse(fecha);
+
+                    //formatter = new SimpleDateFormat("dd/MM/yyy");
+
+                    formatter = new SimpleDateFormat("MM/dd/yyyy");
+
                     lista.add(
-                            new Hospital_ImageItem(decodeImage(item.getString("img")),item.getString("img_text"))
+                            new Record_Item(item.getString("anam_id"),item.getString("anam_title"),formatter.format(date))
 
                     );
                 }
-                BaseAdapter adapter = new Hos_ImageItemAdapter(getActivity(),lista);
+                ArrayAdapter adapter = new Rec_ItemAdapter(getActivity(),lista);
                 listView.setAdapter(adapter);
 
             }
         } catch (JSONException e) {
 
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-    }
-
-    private Bitmap decodeImage(String encoded){
-        byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
-        return BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
     }
 
 }

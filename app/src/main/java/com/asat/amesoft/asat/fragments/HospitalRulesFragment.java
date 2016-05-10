@@ -33,12 +33,12 @@ public class HospitalRulesFragment extends Fragment {
 
     public HospitalRulesFragment() {
         // Required empty public constructor
+        this.token = MyApplication.getToken();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.token = MyApplication.getToken();
             if (!getArguments().getString("title").isEmpty()) {
                 this.Stitle = getArguments().getString("title");
             }

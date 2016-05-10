@@ -14,6 +14,8 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="checkbox_agree">I accept the norms of the</string>
     <string name="forgot_pass">Forgot your password?</string>
+    <string name="login_box">Register</string>
+
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -40,6 +42,7 @@
     <string name="lopd_load">Loading...</string>
     <string name="lopd_accept">Accept</string>
     <string name="lopd_cancel">Cancel</string>
+    <string name="lopd_back">Back</string>
 
 
     <!--Strins relatet to Messages-->
@@ -66,5 +69,9 @@
     <!-- Strings relatet to Hospital -->
     <string name="hospital_rules">Read hospital rules</string>
     <string name="hospital_images">See hospital images</string>
+
+    <!-- Strings relatet to My Record -->
+    <string name="record_name">Name</string>
+    <string name="record_lastName">Last Name</string>
 
 </resources>

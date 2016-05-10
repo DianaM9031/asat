@@ -1,4 +1,4 @@
-package com.asat.amesoft.asat.Models;
+package com.asat.amesoft.asat.Models.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.VolleySingleton;

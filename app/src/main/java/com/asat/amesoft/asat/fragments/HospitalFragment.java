@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
@@ -22,8 +23,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Hos_itemAdapter;
+import com.asat.amesoft.asat.Models.Adapters.Hos_itemAdapter;
 import com.asat.amesoft.asat.Models.Hospital_Item;
+import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -53,16 +55,12 @@ public class HospitalFragment extends Fragment {
 
     public HospitalFragment() {
         // Required empty public constructor
+        this.token= MyApplication.getToken();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            if(!getArguments().getString("token").isEmpty()){
-                this.token=getArguments().getString("token");
-            }
-
-
     }
 
 
@@ -195,6 +193,10 @@ public class HospitalFragment extends Fragment {
                 }
                 ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
                 listView.setAdapter(adapter);
+            }
+            else{
+                Snackbar.make(getView(), jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
             }
         } catch (JSONException e) {
 

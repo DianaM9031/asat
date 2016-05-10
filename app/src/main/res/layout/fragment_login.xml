@@ -25,23 +25,33 @@
         <ImageView
 
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_height="120dp"
             android:src="@drawable/logo_asat"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
             android:paddingBottom="26dp"
             />
 
+        <TextView
+            android:text="@string/login_box"
+            android:textStyle="bold"
+            android:textColor="@color/colorBackground"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:background="@drawable/login_box"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="6"
             android:background="@drawable/login_layout"
             >
 
@@ -115,10 +125,8 @@
 
                 <Button
                     android:id="@+id/login_submit"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="@string/login_submit"
                     android:textStyle="bold"
                     android:enabled="false"
@@ -138,11 +146,13 @@
                 android:onClick="forgot_pass"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
+        </ScrollView>
 
         <TextView
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorBackground"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="@string/copyrigth"
             android:gravity="center"
             />

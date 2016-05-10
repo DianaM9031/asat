@@ -21,6 +21,7 @@ import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
 import com.asat.amesoft.asat.fragments.LoginFragment;
 import com.asat.amesoft.asat.fragments.NewPassFragment;
+import com.asat.amesoft.asat.fragments.PassChangeFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +40,11 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
 
         layout = (CoordinatorLayout) findViewById(R.id.content_login);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("accept",true);
-        change_content(new LoginFragment(),false);
+//        Bundle bundle = new Bundle();
+//        bundle.putBoolean("accept",true);
+        if(savedInstanceState==null) {
+            change_content(new LoginFragment(), false);
+        }
 
 
 
@@ -88,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void processResponse(String json){
-        Log.v("REALLY OUTSIDE",json);
         JSONObject jsonObject;
         String result="";
         try {
@@ -103,10 +105,10 @@ public class LoginActivity extends AppCompatActivity {
                     Snackbar.make(layout, R.string.msg_newpass, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-                    change_content(new NewPassFragment(),true);
+                    change_content(new PassChangeFragment(),true);
                 }
                 else {
-                    if (jsonObject.getBoolean("renew_lopd")) {
+                    if (!jsonObject.getBoolean("renew_lopd")) {
                         Snackbar.make(layout, R.string.msg_newlopd, Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                         Bundle args = new Bundle();

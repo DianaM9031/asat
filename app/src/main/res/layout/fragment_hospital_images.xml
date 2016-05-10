@@ -17,34 +17,52 @@
         android:orientation="horizontal"
         >
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/hospital"
             />
-
-        <TextView
-            android:id="@+id/hospital_title"
-            android:text=""
-            android:layout_width="0dp"
+        <View
+            android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:background="@color/colorAccent"
+            />
+        <TextView
+            android:id="@+id/hospital_images_title"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             />
 
 
     </LinearLayout>
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark" />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"/>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4">
-        <ListView
+        <GridView
             android:id="@+id/hospital_images_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
 
-    </ScrollView>
+            >
+        </GridView>
+    </RelativeLayout>
 
 </LinearLayout>

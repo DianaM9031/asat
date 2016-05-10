@@ -7,12 +7,18 @@ public class Tools {
 
     public static final String baseURL = "http://interno.talentosoftware.com:55955/api/";
     public static final String login = baseURL+"login";
+
     public static final String getLODP = baseURL+"getDisclaimerText";
-    public static final String change_pass = baseURL+"changePassword";
     public static final String setLOPD = baseURL+"setDisclaimerTextAccepted";
-    public static final String newPass = baseURL+"newPass";
+
+    public static final String change_pass = baseURL+"changePassword";
+    public static final String newPass = baseURL+"NewPass";
+
     public static final String hospital = baseURL+"getCenterDetail";
     public static final String hospitalRules = baseURL+"getCenterRules";
     public static final String hospitalImages = baseURL+"getCenterImages";
+
+    public static final String record = baseURL+"getHistory";
+    public static final String recordDetail = baseURL+"getHistoryDetail";
 
 }
