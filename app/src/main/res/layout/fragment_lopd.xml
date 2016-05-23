@@ -13,7 +13,8 @@
 
     <TextView
         android:id="@+id/lopd_tittle"
-
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/tittle"
         android:gravity="center"

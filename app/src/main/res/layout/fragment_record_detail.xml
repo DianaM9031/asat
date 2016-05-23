@@ -7,7 +7,8 @@
     android:paddingRight="30dp"
     android:paddingTop="30dp"
     android:paddingBottom="25dp"
-    tools:context="com.asat.amesoft.asat.fragments.RecordFragment">
+    tools:context="com.asat.amesoft.asat.fragments.RecordDetailFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,17 +41,17 @@
                 android:orientation="vertical"
                 android:paddingBottom="5dp"
                 >
-            <TextView
-                android:textColor="@color/colorAccent"
-                android:text="@string/record_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-            <TextView
-                android:id="@+id/record_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <TextView
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/record_detail_consultation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                <TextView
+                    android:id="@+id/record_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
             <View
@@ -66,12 +67,12 @@
                 >
                 <TextView
                     android:textColor="@color/colorAccent"
-                    android:text="@string/record_lastName"
+                    android:text="@string/record_detail_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
                 <TextView
-                    android:id="@+id/record_lastname"
+                    android:id="@+id/record_detail_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -81,13 +82,19 @@
 
     </LinearLayout>
 
-
-
-    <RelativeLayout
-        android:paddingTop="10dp"
+    <TextView
+        android:id="@+id/record_detail_text"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="1.5"
+        android:background="@drawable/asat_layout"/>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
         <ListView
             android:id="@+id/record_list"
             android:layout_width="wrap_content"

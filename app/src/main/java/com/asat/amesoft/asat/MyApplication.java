@@ -13,11 +13,29 @@ public class MyApplication extends Application {
 
 
     private static String token;
+    private static String name;
+    private static String lastName;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance=this;
+    }
+
+    public static String getLastName() {
+        return lastName;
+    }
+
+    public static void setLastName(String lastName) {
+        MyApplication.lastName = lastName;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        MyApplication.name = name;
     }
 
     public static String getToken() {

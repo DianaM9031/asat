@@ -3,18 +3,18 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
 
     tools:context="com.asat.amesoft.asat.fragments.PassChangeFragment">
 
 
 
 
-    <android.support.v4.widget.Space
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
+
 
     <LinearLayout
+        android:layout_gravity="center"
         android:layout_width="0dp"
         android:layout_weight="10"
         android:layout_height="match_parent"
@@ -154,10 +154,7 @@
             />
     </LinearLayout>
 
-    <android.support.v4.widget.Space
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
+
 
 </LinearLayout>
 

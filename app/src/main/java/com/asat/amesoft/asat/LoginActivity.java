@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void processResponse(String json){
+        Log.v("LOGIN",json);
         JSONObject jsonObject;
         String result="";
         try {
@@ -100,7 +101,13 @@ public class LoginActivity extends AppCompatActivity {
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
                 String token=jsonObject.getString("token_id");
+                String name=jsonObject.getString("user_fn");
+                String lastName=jsonObject.getString("user_ln");
+
                 MyApplication.setToken(token);
+                MyApplication.setName(name);
+                MyApplication.setLastName(lastName);
+
                 if(jsonObject.getBoolean("renew_pass")){
                     Snackbar.make(layout, R.string.msg_newpass, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -108,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     change_content(new PassChangeFragment(),true);
                 }
                 else {
-                    if (!jsonObject.getBoolean("renew_lopd")) {
+                    if (jsonObject.getBoolean("renew_lopd")) {
                         Snackbar.make(layout, R.string.msg_newlopd, Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                         Bundle args = new Bundle();

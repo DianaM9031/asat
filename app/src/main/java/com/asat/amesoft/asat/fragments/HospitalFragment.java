@@ -144,7 +144,7 @@ public class HospitalFragment extends Fragment {
         {
             @Override
             protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String,String>();
+                Map<String,String> params = new HashMap<>();
                 params.put("token_id",token_id);
                 return params;
             }
@@ -157,10 +157,10 @@ public class HospitalFragment extends Fragment {
     private void processResponse(String response) {
 
         JSONObject jsonObject;
-        String result="";
+        String result;
 
 
-        String center_logo="";
+        String center_logo;
         try {
             jsonObject = new JSONObject(response);
             result = jsonObject.getJSONObject("response").get("result").toString();
@@ -195,7 +195,7 @@ public class HospitalFragment extends Fragment {
                 listView.setAdapter(adapter);
             }
             else{
-                Snackbar.make(getView(), jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
+                Snackbar.make(listView, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         } catch (JSONException e) {
@@ -205,6 +205,7 @@ public class HospitalFragment extends Fragment {
 
 
     private Bitmap decodeImage(String encoded){
+        Log.v("Image64",encoded);
             byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
             return BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
     }

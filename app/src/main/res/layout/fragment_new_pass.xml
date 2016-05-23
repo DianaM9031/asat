@@ -27,6 +27,7 @@
             android:layout_height="120dp"
             android:src="@drawable/logo_asat"
             android:paddingBottom="26dp"
+            android:layout_marginBottom="50dp"
             />
         <TextView
             android:text="@string/login_box"
@@ -37,7 +38,7 @@
             android:background="@drawable/login_box"
             android:layout_width="100dp"
             android:layout_height="0dp"
-            android:layout_weight="0.6"/>
+            android:layout_weight="0.3"/>
         <LinearLayout
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="5"
+            android:layout_weight="3"
             android:background="@drawable/asat_layout"
             >
 

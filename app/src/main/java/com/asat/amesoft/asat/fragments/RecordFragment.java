@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,8 +56,15 @@ public class RecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
+
+        TextView name = (TextView) view.findViewById(R.id.record_name);
+        TextView lastName = (TextView) view.findViewById(R.id.record_lastname);
+        name.setText(MyApplication.getName());
+        lastName.setText(MyApplication.getLastName());
+
         listView = (ListView) view.findViewById(R.id.record_list);
         connect(this.token, Tools.record);
+
         return view;
     }
 
@@ -99,7 +108,7 @@ public class RecordFragment extends Fragment {
             result = jsonObject.getJSONObject("response").get("result").toString();
 
             if(result.equals("OK")){
-                ArrayList<Record_Item> lista = new ArrayList<>();
+                final ArrayList<Record_Item> lista = new ArrayList<>();
                 JSONArray images = jsonObject.getJSONArray("anamnesis");
                 for(int i=0; i<images.length(); i++){
                     JSONObject item = images.getJSONObject(i).getJSONObject("anam_item");
@@ -120,6 +129,24 @@ public class RecordFragment extends Fragment {
                 }
                 ArrayAdapter adapter = new Rec_ItemAdapter(getActivity(),lista);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Fragment f = new RecordDetailFragment();
+                        Bundle args = new Bundle();
+                        args.putString("title",lista.get(position).getTitle());
+                        args.putString("date",lista.get(position).getDate());
+                        args.putString("id",lista.get(position).getId());
+                        f.setArguments(args);
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_main,f).addToBackStack(null)
+                                .commit();
+                    }
+                });
+
 
             }
         } catch (JSONException e) {

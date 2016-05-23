@@ -74,4 +74,8 @@
     <string name="record_name">Name</string>
     <string name="record_lastName">Last Name</string>
 
+    <!-- Strings relatet to My Record Detail -->
+    <string name="record_detail_consultation">Consultation</string>
+    <string name="record_detail_date">Date</string>
+
 </resources>

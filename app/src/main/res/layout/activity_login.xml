@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/content_login"
     tools:context="com.asat.amesoft.asat.LoginActivity"
-    android:background="@drawable/fondo_menu"
+    android:background="@drawable/fondo_login"
     >
 </android.support.design.widget.CoordinatorLayout>
 
