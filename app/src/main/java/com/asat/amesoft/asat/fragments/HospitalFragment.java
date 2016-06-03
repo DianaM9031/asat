@@ -23,7 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Adapters.Hos_itemAdapter;
+import com.asat.amesoft.asat.Models.Adapters.Hospital_IA;
 import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
@@ -177,8 +177,14 @@ public class HospitalFragment extends Fragment {
                 if(jsonObject.getBoolean("center_hasRules")){
                     rules.setVisibility(View.VISIBLE);
                 }
+                else{
+                    rules.setVisibility(View.GONE);
+                }
                 if(jsonObject.getBoolean("center_hasImages")){
                     images.setVisibility(View.VISIBLE);
+                }
+                else{
+                    images.setVisibility(View.GONE);
                 }
                 //se cambia el logo del hospital luego de decodificar la imagen
                 icon.setImageBitmap(decodeImage(center_logo));
@@ -191,7 +197,7 @@ public class HospitalFragment extends Fragment {
                             item.getString("item_text"),item.getString("item_icon")
                     ));
                 }
-                ArrayAdapter<Hospital_Item> adapter = new Hos_itemAdapter(getActivity(),lista);
+                ArrayAdapter<Hospital_Item> adapter = new Hospital_IA(getActivity(),lista);
                 listView.setAdapter(adapter);
             }
             else{

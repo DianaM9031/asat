@@ -1,5 +1,9 @@
 package com.asat.amesoft.asat.Tools;
 
+import android.content.res.Configuration;
+
+import java.util.Locale;
+
 /**
  * Created by Jorge on 20/04/2016.
  */
@@ -20,5 +24,11 @@ public class Tools {
 
     public static final String record = baseURL+"getHistory";
     public static final String recordDetail = baseURL+"getHistoryDetail";
+
+    public static final String advices = baseURL+"getAdvices";
+    public static final String advicesDetail = baseURL+"getAdviceDetail";
+
+
+
 
 }

@@ -15,8 +15,8 @@ import java.util.ArrayList;
 /**
  * Created by Jorge on 10/05/2016.
  */
-public class Rec_ItemAdapter extends ArrayAdapter<Record_Item> {
-    public Rec_ItemAdapter(Context context, ArrayList<Record_Item> values) {
+public class Records_IA extends ArrayAdapter<Record_Item> {
+    public Records_IA(Context context, ArrayList<Record_Item> values) {
         super(context, R.layout.row_record ,values);
     }
 

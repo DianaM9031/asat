@@ -1,34 +1,34 @@
 package com.asat.amesoft.asat;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.asat.amesoft.asat.fragments.AdvicesFragment;
 import com.asat.amesoft.asat.fragments.HospitalFragment;
 import com.asat.amesoft.asat.fragments.HospitalRulesFragment;
 import com.asat.amesoft.asat.fragments.MenuFragment;
 import com.asat.amesoft.asat.fragments.RecordFragment;
+import com.asat.amesoft.asat.fragments.SettingsFragment;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static String token="";
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,11 @@ public class MainActivity extends AppCompatActivity
         token = MyApplication.getToken();
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
        // TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        setSupportActionBar(toolbar);
 
+
+        setSupportActionBar(toolbar);
 
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity
         change_content(f,true);
     }
 
+    public void goAdvices(View view){
+        Fragment f = new AdvicesFragment();
+        change_content(f,true);
+    }
+
+    public void goSettings(View view){
+        Fragment f = new SettingsFragment();
+        change_content(f,true);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -107,10 +118,16 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case android.R.id.home:
+                change_content(new MenuFragment(),true);
+                break;
         }
+
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -142,6 +159,14 @@ public class MainActivity extends AppCompatActivity
 
     private void change_content(Fragment f, boolean back){
         FragmentTransaction ft;
+
+        if(f.getClass().equals(MenuFragment.class)){
+            toolbar.setNavigationIcon(null);
+        }
+        else{
+            toolbar.setNavigationIcon(+R.drawable.ic_menu_black_24dp);
+        }
+
         ft=getSupportFragmentManager().beginTransaction().replace(R.id.content_main,f);
         if(back){
             ft.addToBackStack(null).commit();

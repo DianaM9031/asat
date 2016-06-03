@@ -20,10 +20,10 @@ import java.util.ArrayList;
 /**
  * Created by Jorge on 7/05/2016.
  */
-public class Hos_itemAdapter extends ArrayAdapter<Hospital_Item> {
+public class Hospital_IA extends ArrayAdapter<Hospital_Item> {
 
     ImageLoader mImageLoader;
-    public Hos_itemAdapter(Context context, ArrayList<Hospital_Item> values) {
+    public Hospital_IA(Context context, ArrayList<Hospital_Item> values) {
         super(context, R.layout.row_hospital, values);
         mImageLoader = VolleySingleton.getInstance().getImageLoader();
     }

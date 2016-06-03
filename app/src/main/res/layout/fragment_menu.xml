@@ -51,7 +51,8 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/menu_hospital"
         android:layout_alignStart="@+id/menu_hospital"
-        android:id="@+id/menu_advices" />
+        android:id="@+id/menu_advices"
+        android:onClick="goAdvices"/>
 
     <Button
         android:textColor="@color/colorPrimaryDark"
@@ -78,7 +79,8 @@
         android:layout_below="@+id/menu_advices"
         android:layout_alignLeft="@+id/menu_advices"
         android:layout_alignStart="@+id/menu_advices"
-        android:layout_marginTop="55dp" />
+        android:layout_marginTop="55dp"
+        android:onClick="goSettings"/>
 
     <Button
         android:textColor="@color/colorPrimaryDark"

@@ -100,6 +100,7 @@
         android:layout_weight="0.35"
         android:text="@string/hospital_rules"
         android:textAllCaps="false"
+        android:visibility="gone"
         android:onClick="goRules"/>
 
     <android.support.v4.widget.Space
@@ -108,6 +109,7 @@
         android:layout_weight="0.1"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/hospital_images"
         android:padding="5dp"
         android:layout_gravity="center"

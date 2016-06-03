@@ -17,11 +17,11 @@ import java.util.ArrayList;
 /**
  * Created by Jorge on 8/05/2016.
  */
-public class Hos_ImageItemAdapter extends BaseAdapter {
+public class Hospital_Image_IA extends BaseAdapter {
 
     ArrayList<Hospital_ImageItem> values;
     Context context;
-    public Hos_ImageItemAdapter(Context context, ArrayList<Hospital_ImageItem> values) {
+    public Hospital_Image_IA(Context context, ArrayList<Hospital_ImageItem> values) {
 //        super(context, R.layout.row_hospital_image ,values);
         this.context=context;
         this.values=values;

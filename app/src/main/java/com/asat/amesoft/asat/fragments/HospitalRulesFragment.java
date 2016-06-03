@@ -4,6 +4,7 @@ package com.asat.amesoft.asat.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class HospitalRulesFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
+                        Log.v("Hospital Rules",response);
                         processResponse(response);
                     }
                 },
@@ -107,10 +109,11 @@ public class HospitalRulesFragment extends Fragment {
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
                 rules_title=jsonObject.getString("rules_title");
-                rules_text=jsonObject.getString("rules_text");
+
+                //rules_text=;
 
                 ruleTitle.setText(rules_title);
-                rules.setText(rules_text);
+                rules.setText(Html.fromHtml(jsonObject.getString("rules_text")));
             }
         } catch (JSONException e) {
 

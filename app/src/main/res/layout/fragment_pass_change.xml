@@ -130,7 +130,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="@string/login_submit"
+                    android:text="@string/passchange_submit"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />

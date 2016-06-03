@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -17,7 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Adapters.Hos_ImageItemAdapter;
 import com.asat.amesoft.asat.Models.Hospital_ImageItem;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
@@ -120,7 +118,7 @@ public class RecordDetailFragment extends Fragment {
 
 //                    );
                 }
-//                BaseAdapter adapter = new Hos_ImageItemAdapter(getActivity(),lista);
+//                BaseAdapter adapter = new Hospital_Image_IA(getActivity(),lista);
 //                listView.setAdapter(adapter);
 
             }

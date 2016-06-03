@@ -1,18 +1,19 @@
 package com.asat.amesoft.asat.fragments;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -20,8 +21,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Adapters.Hospital_Image_IA;
-import com.asat.amesoft.asat.Models.Hospital_ImageItem;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
@@ -38,26 +37,22 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HospitalImagesFragment extends Fragment {
+public class AdvicesDetailFragment extends Fragment {
 
-    String token,Stitle,hospital;
-    GridView listView;
-    TextView title;
-
-    public HospitalImagesFragment() {
+    private String id,sTitle;
+    private TextView title;
+    private TextView text;
+    private TextView url;
+    public AdvicesDetailFragment() {
         // Required empty public constructor
-        this.token = MyApplication.getToken();
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!getArguments().getString("title").isEmpty()) {
-            this.Stitle = getArguments().getString("title");
-        }
-        if (!getArguments().getString("hospital").isEmpty()) {
-            this.hospital = getArguments().getString("hospital");
-        }
+        id=getArguments().getString("id_advice");
+        sTitle=getArguments().getString("title");
 
     }
 
@@ -65,38 +60,58 @@ public class HospitalImagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        connect(this.token, Tools.hospitalImages);
-        View view = inflater.inflate(R.layout.fragment_hospital_images, container, false);
-        listView = (GridView) view.findViewById(R.id.hospital_images_list);
-        title = (TextView) view.findViewById(R.id.hospital_images_title);
-        title.setText(Stitle);
+        View view = inflater.inflate(R.layout.fragment_advices_detail, container, false);
+        title = (TextView) view.findViewById(R.id.advices_detail_title);
+        text = (TextView) view.findViewById(R.id.advices_detail_text);
+        url = (TextView) view.findViewById(R.id.advices_detail_url);
+
+        title.setText(sTitle);
+
+        url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url_text = url.getText().toString();
+                Log.v("URL text", url_text);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url_text));
+
+                startActivity(i);
+            }
+        });
+
+        connect(MyApplication.getToken(), Tools.advicesDetail);
         return view;
     }
 
     private void connect(final String token_id,String uri){
+        //Volley connection
         RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
                     @Override
                     public void onResponse(String response) {
+
+                        Log.v("AdvicesDetail Res",response);
                         processResponse(response);
+
                     }
                 },
                 new Response.ErrorListener(){
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","Errors  happens "+error);
+                        Log.v("response","Errors  happens");
                     }
                 }
         )
         {
+
             @Override
             protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String,String>();
+                Map<String,String> params = new HashMap<>();
                 params.put("token_id",token_id);
-                params.put("center_id",hospital);
+                params.put("advice_id",id);
                 return params;
             }
         };
@@ -107,24 +122,24 @@ public class HospitalImagesFragment extends Fragment {
     private void processResponse(String response) {
 
         JSONObject jsonObject;
-        String result="";
+        String result;
 
         try {
             jsonObject = new JSONObject(response);
             result = jsonObject.getJSONObject("response").get("result").toString();
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
-                ArrayList<Hospital_ImageItem> lista = new ArrayList<>();
-                JSONArray images = jsonObject.getJSONArray("lst_images");
-                for(int i=0; i<images.length(); i++){
-                    JSONObject item = images.getJSONObject(i).getJSONObject("item_img");
-                    lista.add(
-                            new Hospital_ImageItem(decodeImage(item.getString("img")),item.getString("img_text"))
 
-                    );
+                text.setText(Html.fromHtml(jsonObject.getString("advice_text")));
+                if(!jsonObject.getString("advice_url").equals("null")) {
+                    url.setText(jsonObject.getString("advice_url"));
+                    url.setVisibility(View.VISIBLE);
                 }
-                BaseAdapter adapter = new Hospital_Image_IA(getActivity(),lista);
-                listView.setAdapter(adapter);
+                else{
+                    url.setVisibility(View.GONE);
+                }
+            }
+            else{
 
             }
         } catch (JSONException e) {
@@ -132,9 +147,5 @@ public class HospitalImagesFragment extends Fragment {
         }
     }
 
-    private Bitmap decodeImage(String encoded){
-        byte[] decodedImage = Base64.decode(encoded, Base64.CRLF);
-        return BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
-    }
 
 }

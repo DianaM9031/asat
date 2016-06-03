@@ -1,6 +1,8 @@
 package com.asat.amesoft.asat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -39,9 +41,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
 
+
+        SharedPreferences sharedPref = getSharedPreferences("Preferences",Context.MODE_PRIVATE);
+        String language =sharedPref.getString("language","en");
+        Log.v("loaded language",language);
+        MyApplication.changeLanguage(language,this);
+
+
         layout = (CoordinatorLayout) findViewById(R.id.content_login);
-//        Bundle bundle = new Bundle();
-//        bundle.putBoolean("accept",true);
         if(savedInstanceState==null) {
             change_content(new LoginFragment(), false);
         }
@@ -73,7 +80,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("response","Errors  happens");
+                        Log.v("response","Errors  happens "+error.toString());
+                        Snackbar.make(layout, error.toString(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
                 }
                 )

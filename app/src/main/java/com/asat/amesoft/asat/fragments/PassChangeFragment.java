@@ -2,8 +2,10 @@ package com.asat.amesoft.asat.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,11 @@ import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +114,7 @@ public class PassChangeFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
+                        Log.v("Pass change response",response);
                         //processResponse(response);
 
                     }
@@ -131,6 +139,24 @@ public class PassChangeFragment extends Fragment {
         };
         queue.add(stringRequest);
 
+    }
+
+    private void processResponse(String response) {
+
+        JSONObject jsonObject;
+        String result="";
+
+        try {
+            jsonObject = new JSONObject(response);
+            result = jsonObject.getJSONObject("response").get("result").toString();
+            //Si el resultado de la consulta esta bien
+            if(result.equals("OK")){
+                Snackbar.make(name, R.string.new_pass_suceed, Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        } catch (JSONException e) {
+
+        }
     }
 
 }

@@ -2,6 +2,9 @@ package com.asat.amesoft.asat;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+
+import java.util.Locale;
 
 /**
  * Created by Jorge on 20/04/2016.
@@ -53,4 +56,14 @@ public class MyApplication extends Application {
     public static Context getAppContext(){
         return  sInstance.getApplicationContext();
     }
+
+    public static void changeLanguage(String languageToLoad, Context context){
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config,
+                getAppContext().getResources().getDisplayMetrics());
+    }
+
 }

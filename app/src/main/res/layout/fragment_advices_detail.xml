@@ -7,21 +7,21 @@
     android:paddingRight="30dp"
     android:paddingTop="30dp"
     android:paddingBottom="25dp"
-    tools:context="com.asat.amesoft.asat.fragments.RecordDetailFragment">
-
+    tools:context="com.asat.amesoft.asat.fragments.AdvicesDetailFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.6"
         android:orientation="horizontal"
 
         >
         <ImageView
             android:paddingRight="5dp"
+            android:paddingLeft="5dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/history"
+            android:src="@drawable/advises"
             />
         <View
             android:layout_width="2dp"
@@ -43,12 +43,12 @@
                 >
                 <TextView
                     android:textColor="@color/colorAccent"
-                    android:text="@string/record_detail_consultation"
+                    android:text="@string/advice_titile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
                 <TextView
-                    android:id="@+id/record_detail_title"
+                    android:id="@+id/advices_detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -59,59 +59,41 @@
                 android:layout_height="2dp"
                 android:background="@color/colorBackground"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="5dp"
-                >
-                <TextView
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/record_detail_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-                <TextView
-                    android:id="@+id/record_detail_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:background="@drawable/asat_layout"
-        >
-    <TextView
-        android:padding="10dp"
-        android:id="@+id/record_detail_text"
+
+
+    <LinearLayout
         android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:background="@drawable/asat_layout"/>
-    </ScrollView>
-
-    <RelativeLayout
-
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5">
-        <ListView
-            android:id="@+id/record_list"
+        android:orientation="vertical"
+        android:layout_weight="3">
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:horizontalSpacing="10dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10sp"
-            >
-        </ListView>
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="10dp"
+                android:id="@+id/advices_detail_text"
+                android:background="@drawable/asat_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/advices_detail_url"
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/asat_layout_green"/>
+    </LinearLayout>
 
 </LinearLayout>

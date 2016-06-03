@@ -28,13 +28,14 @@
     <string name="actual_pass">Actual password</string>
     <string name="new_pass">New password</string>
     <string name="confirm_new">Confirm new password</string>
-    <string name="passchange_submit">Change password and sing in</string>
+    <string name="passchange_submit">Send</string>
 
     <!--String related to newPass -->
     <string name="newPass_message">Please enter below the email that you use for registration,
     then a new temporal password will be send.</string>
     <string name="newPass_submit">Send</string>
     <string name="pass_not_match">The password doesn\'t match</string>
+    <string name="new_pass_suceed">Your password has been updated</string>
 
 
     <!--String related to LOPD -->
@@ -78,4 +79,18 @@
     <string name="record_detail_consultation">Consultation</string>
     <string name="record_detail_date">Date</string>
 
+    <!-- Strings related to Advices-->
+    <string name="advice_titile">Title</string>
+
+    <!-- Strings related to Settings-->
+    <string name="settings_titile">Settings</string>
+    <string name="settings_password">Change password</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="settings_message">The changes have been saved</string>
+
+    <string-array name="language_array">
+        <item>Español</item>
+        <item>English</item>
+    </string-array>
 </resources>
