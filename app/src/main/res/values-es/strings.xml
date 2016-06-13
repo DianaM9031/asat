@@ -24,12 +24,12 @@
     <string name="lopd_cancel">Cancelar</string>
     <string name="lopd_load">Cargando&#8230;</string>
     <string name="lopd_termns">Yo he leído y acepto</string>
-    <string name="menu_about">Acerca de</string>
-    <string name="menu_advices">Consejos</string>
-    <string name="menu_config">Configuración</string>
-    <string name="menu_hospital">Mi hospital</string>
-    <string name="menu_notifications">Notificaciones</string>
-    <string name="menu_record">Mi historial</string>
+    <string name="about_title">Acerca de</string>
+    <string name="advices_title">Consejos</string>
+    <string name="config_tittle">Configuración</string>
+    <string name="hospital_title">Mi hospital</string>
+    <string name="notifications_title">Notificaciones</string>
+    <string name="record_title">Mi historial</string>
     <string name="msg_newlopd">Nuestros terminos se han actualizado\n Debes leer y aceptar los nuevos terminos</string>
     <string name="msg_newpass">Debes renovar tu contraseña temporal</string>
     <string name="newPass_message">Por favor entra debajo el email que usaste para registrarte, entonces una nueva contraseña temporal será enviada</string>
@@ -45,9 +45,9 @@
     <string name="settings_cancel">Cancelar</string>
     <string name="settings_password">Cambiar contraseña</string>
     <string name="settings_save">Guardar</string>
-    <string name="settings_titile">Configuración</string>
+    <string name="settings_title">Configuración</string>
     <string name="title_activity_main"></string>
-    <string name="tittle"></string>
+    <string name="title"></string>
     <string name="settings_message">Los cambios fueron guardados</string>
     <string name="new_pass_suceed">Tu contraseña ha sido actualizada</string>
 </resources>

@@ -12,7 +12,7 @@
         android:drawableTop="@drawable/hospital"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_hospital"
+        android:text="@string/hospital_title"
         android:textAllCaps="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -29,7 +29,7 @@
         android:drawableTop="@drawable/history"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_record"
+        android:text="@string/record_title"
         android:textAllCaps="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -46,7 +46,7 @@
         android:drawableTop="@drawable/advises"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_advices"
+        android:text="@string/advices_title"
         android:textAllCaps="false"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/menu_hospital"
@@ -61,11 +61,12 @@
         android:drawableTop="@drawable/notifications"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_notifications"
+        android:text="@string/notifications_title"
         android:textAllCaps="false"
         android:layout_alignTop="@+id/menu_advices"
         android:layout_alignLeft="@+id/menu_record"
-        android:layout_alignStart="@+id/menu_record" />
+        android:layout_alignStart="@+id/menu_record"
+        android:onClick="goNotifications"/>
 
     <Button
         android:textColor="@color/colorPrimaryDark"
@@ -73,7 +74,7 @@
         android:drawableTop="@drawable/configure"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_config"
+        android:text="@string/settings_title"
         android:textAllCaps="false"
         android:id="@+id/menu_config"
         android:layout_below="@+id/menu_advices"
@@ -89,11 +90,12 @@
         android:drawableTop="@drawable/about"
         android:layout_width="@dimen/icons"
         android:layout_height="@dimen/icons"
-        android:text="@string/menu_about"
+        android:text="@string/about_title"
         android:textAllCaps="false"
         android:layout_alignTop="@+id/menu_config"
         android:layout_alignLeft="@+id/menu_notifications"
-        android:layout_alignStart="@+id/menu_notifications" />
+        android:layout_alignStart="@+id/menu_notifications"
+        android:onClick="goAbout"/>
 
 
 </RelativeLayout>

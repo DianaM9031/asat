@@ -197,8 +197,11 @@ public class HospitalFragment extends Fragment {
                             item.getString("item_text"),item.getString("item_icon")
                     ));
                 }
-                ArrayAdapter<Hospital_Item> adapter = new Hospital_IA(getActivity(),lista);
-                listView.setAdapter(adapter);
+                ArrayAdapter<Hospital_Item> adapter;
+                if(getActivity()!=null) {
+                    adapter = new Hospital_IA(getActivity(), lista);
+                    listView.setAdapter(adapter);
+                }
             }
             else{
                 Snackbar.make(listView, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)

@@ -105,7 +105,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void saveChanges(){
-        Log.v("Sett test",languageToLoad);
+
         SharedPreferences prefs =
                 getActivity().getSharedPreferences("Preferences",Context.MODE_PRIVATE);
 

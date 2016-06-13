@@ -34,6 +34,9 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     CoordinatorLayout layout;
+    private SharedPreferences sharedPref;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,16 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
 
 
-        SharedPreferences sharedPref = getSharedPreferences("Preferences",Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("Preferences",Context.MODE_PRIVATE);
         String language =sharedPref.getString("language","en");
-        Log.v("loaded language",language);
         MyApplication.changeLanguage(language,this);
+
+//        if(sharedPref.contains("token")){
+//            MyApplication.setToken(sharedPref.getString("token","null"));
+//            MyApplication.setName(sharedPref.getString("name","null"));
+//            MyApplication.setLastName(sharedPref.getString("lastName","null"));
+//            loadMenu(MyApplication.getToken());
+//        }
 
 
         layout = (CoordinatorLayout) findViewById(R.id.content_login);
@@ -112,6 +121,12 @@ public class LoginActivity extends AppCompatActivity {
                 String token=jsonObject.getString("token_id");
                 String name=jsonObject.getString("user_fn");
                 String lastName=jsonObject.getString("user_ln");
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("token", token);
+                editor.putString("name", name);
+                editor.putString("lastName", lastName);
+                editor.apply();
 
                 MyApplication.setToken(token);
                 MyApplication.setName(name);

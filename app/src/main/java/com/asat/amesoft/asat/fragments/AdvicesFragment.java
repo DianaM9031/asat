@@ -4,6 +4,7 @@ package com.asat.amesoft.asat.fragments;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,8 +117,11 @@ public class AdvicesFragment extends Fragment {
                     lista.add(item.getString("advice_title"));
                     advice_id.add(item.getString("advice_id"));
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),R.layout.row_advices,lista);
-                listView.setAdapter(adapter);
+                ArrayAdapter<String> adapter;
+                if(getActivity()!=null) {
+                    adapter = new ArrayAdapter<>(getActivity(), R.layout.row_advices, lista);
+                    listView.setAdapter(adapter);
+                }
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -139,6 +143,7 @@ public class AdvicesFragment extends Fragment {
             else{
                 Snackbar.make(listView, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                Log.v("Expired token",MyApplication.getToken());
             }
         } catch (JSONException e) {
 

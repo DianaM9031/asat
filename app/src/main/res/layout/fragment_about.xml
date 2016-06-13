@@ -7,7 +7,7 @@
     android:paddingRight="30dp"
     android:paddingTop="30dp"
     android:paddingBottom="25dp"
-    tools:context=".fragments.SettingsFragment">
+    tools:context="com.asat.amesoft.asat.fragments.AboutFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/configure"
+            android:src="@drawable/about"
             />
         <View
             android:layout_width="2dp"
@@ -26,9 +26,9 @@
             android:background="@color/colorAccent"
             />
         <TextView
-            android:id="@+id/settings_title"
+            android:id="@+id/about_title"
             android:paddingLeft="10dp"
-            android:text="@string/settings_title"
+            android:text="@string/about_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -50,45 +50,35 @@
         android:orientation="vertical"
         >
 
-        <Spinner
-            android:id="@+id/setting_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
         <TextView
-            android:id="@+id/setting_pass"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:id="@+id/about_appname"
+            android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/settings_password"
-            android:layout_below="@+id/setting_language"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <LinearLayout
-            android:gravity="right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-            <Button
-                android:id="@+id/setting_save"
-                android:text="@string/settings_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                />
+            android:text="@string/app_name"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-            <Button
-                android:id="@+id/setting_cancel"
-                android:text="@string/settings_cancel"
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <TextView
+            android:layout_marginTop="46dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/about_version"
+            android:layout_below="@+id/about_appname"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/about_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/about_version"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
 
 
     </RelativeLayout>

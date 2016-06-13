@@ -1,6 +1,5 @@
 package com.asat.amesoft.asat;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import android.support.design.widget.NavigationView;
@@ -15,14 +14,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.Tools.VolleySingleton;
+import com.asat.amesoft.asat.fragments.AboutFragment;
 import com.asat.amesoft.asat.fragments.AdvicesFragment;
 import com.asat.amesoft.asat.fragments.HospitalFragment;
 import com.asat.amesoft.asat.fragments.HospitalRulesFragment;
 import com.asat.amesoft.asat.fragments.MenuFragment;
+import com.asat.amesoft.asat.fragments.NotificationsFragment;
 import com.asat.amesoft.asat.fragments.RecordFragment;
 import com.asat.amesoft.asat.fragments.SettingsFragment;
 
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,6 +75,8 @@ public class MainActivity extends AppCompatActivity
         Fragment f = new HospitalFragment();
         f.setArguments(args);
         change_content(f,true);
+        toolbar.setTitle(R.string.hospital_title);
+
     }
 
     public void goRules(View view){
@@ -75,23 +85,74 @@ public class MainActivity extends AppCompatActivity
         Fragment f = new HospitalRulesFragment();
         f.setArguments(args);
         change_content(f,true);
-
     }
 
     public void goRecord(View view){
         Fragment f = new RecordFragment();
         change_content(f,true);
+        toolbar.setTitle(R.string.record_title);
     }
 
     public void goAdvices(View view){
         Fragment f = new AdvicesFragment();
         change_content(f,true);
+        toolbar.setTitle(R.string.advices_title);
     }
 
     public void goSettings(View view){
         Fragment f = new SettingsFragment();
         change_content(f,true);
+        toolbar.setTitle(R.string.settings_title);
     }
+
+    public void goAbout(View view){
+        Fragment f = new AboutFragment();
+        change_content(f,true);
+        toolbar.setTitle(R.string.about_title);
+    }
+
+    public void goNotifications(View view){
+        Fragment f = new NotificationsFragment();
+        change_content(f,true);
+        toolbar.setTitle(R.string.notifications_title);
+        //keepAlive(MyApplication.getToken(), Tools.keep);
+    }
+
+
+    private void keepAlive(final String token_id,String uri){
+        //Volley connection
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
+                new Response.Listener<String>(){
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.v("Advices Res",response);
+                        //processResponse(response);
+
+                    }
+                },
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("response","Errors  happens");
+                    }
+                }
+        )
+        {
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<>();
+                params.put("token_id",token_id);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
+
 
 
     @Override

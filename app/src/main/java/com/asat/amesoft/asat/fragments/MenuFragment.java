@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.asat.amesoft.asat.R;
  */
 public class MenuFragment extends Fragment {
 
+    Toolbar toolbar;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -29,11 +31,17 @@ public class MenuFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        if(getActivity()!=null) {
+            toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            toolbar.setNavigationIcon(null);
+        }
+        return view;
     }
 
 }

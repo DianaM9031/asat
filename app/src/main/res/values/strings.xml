@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">ASAT</string>
+    <string name="app_name">ASAT SL</string>
 
     <!-- General Strings -->
-    <string name="tittle">ASAT SL</string>
+    <string name="title">ASAT SL</string>
     <string name="copyrigth">Asat Salud ® 2016 </string>
     <string name="email">Email</string>
 
@@ -60,12 +60,12 @@
     <string name="action_settings">Settings</string>
 
     <!-- Strings related to Menu -->
-    <string name="menu_hospital">My hospital</string>
-    <string name="menu_record">My record</string>
-    <string name="menu_advices">Advices</string>
-    <string name="menu_notifications">Notifications</string>
-    <string name="menu_config">Settings</string>
-    <string name="menu_about">About</string>
+    <string name="hospital_title">My hospital</string>
+    <string name="record_title">My record</string>
+    <string name="advices_title">Advices</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="settings_title">Settings</string>
+    <string name="about_title">About</string>
 
     <!-- Strings relatet to Hospital -->
     <string name="hospital_rules">Read hospital rules</string>
@@ -79,15 +79,16 @@
     <string name="record_detail_consultation">Consultation</string>
     <string name="record_detail_date">Date</string>
 
-    <!-- Strings related to Advices-->
-    <string name="advice_titile">Title</string>
 
     <!-- Strings related to Settings-->
-    <string name="settings_titile">Settings</string>
     <string name="settings_password">Change password</string>
     <string name="settings_save">Save</string>
     <string name="settings_cancel">Cancel</string>
     <string name="settings_message">The changes have been saved</string>
+
+    <!-- Strings related to About-->
+    <string name="about_version">Version</string>
+
 
     <string-array name="language_array">
         <item>Español</item>

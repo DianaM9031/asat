@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,6 +39,7 @@ public class RecordDetailFragment extends Fragment {
 
     private TextView tv_title,tv_date,tv_text;
     private String id,title,date;
+    private ListView listView;
 
     public RecordDetailFragment() {
         // Required empty public constructor
@@ -60,6 +63,7 @@ public class RecordDetailFragment extends Fragment {
         tv_text = (TextView) view.findViewById(R.id.record_detail_text);
         tv_title.setText(title);
         tv_date.setText(date);
+        listView = (ListView) view.findViewById(R.id.record_list);
 
         connect(Tools.recordDetail);
         return view;
@@ -73,7 +77,7 @@ public class RecordDetailFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
-                        Log.v("Response",response);
+                        Log.v("Record detail response",response);
                         processResponse(response);
                     }
                 },
@@ -108,19 +112,20 @@ public class RecordDetailFragment extends Fragment {
             result = jsonObject.getJSONObject("response").get("result").toString();
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
+
                 tv_text.setText(Html.fromHtml(jsonObject.getString("anam_text")));
-                ArrayList<Hospital_ImageItem> lista = new ArrayList<>();
-                JSONArray images = jsonObject.getJSONArray("lst_images");
-                for(int i=0; i<images.length(); i++){
-                    JSONObject item = images.getJSONObject(i).getJSONObject("item_img");
-//                    lista.add(
-//                            new Hospital_ImageItem(decodeImage(item.getString("img")),item.getString("img_text"))
+                ArrayList<String> lista = new ArrayList<>();
+                JSONArray reports = jsonObject.getJSONArray("reports");
 
-//                    );
+                for(int i=0; i<reports.length(); i++){
+                    JSONObject item = reports.getJSONObject(i).getJSONObject("report");
+                    lista.add(item.getString("report_text"));
                 }
-//                BaseAdapter adapter = new Hospital_Image_IA(getActivity(),lista);
-//                listView.setAdapter(adapter);
-
+              ArrayAdapter<String> adapter;
+                if(getActivity()!=null) {
+                    adapter = new ArrayAdapter<>(getActivity(), R.layout.row_advices, lista);
+                    listView.setAdapter(adapter);
+                }
             }
         } catch (JSONException e) {
 

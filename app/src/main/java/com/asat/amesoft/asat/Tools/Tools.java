@@ -11,6 +11,7 @@ public class Tools {
 
     public static final String baseURL = "http://interno.talentosoftware.com:55955/api/";
     public static final String login = baseURL+"login";
+    public static final String keep = baseURL+"KeepAlive";
 
     public static final String getLODP = baseURL+"getDisclaimerText";
     public static final String setLOPD = baseURL+"setDisclaimerTextAccepted";
@@ -27,6 +28,9 @@ public class Tools {
 
     public static final String advices = baseURL+"getAdvices";
     public static final String advicesDetail = baseURL+"getAdviceDetail";
+
+
+    public static final String notifications = baseURL+"getReminders";
 
 
 

@@ -65,7 +65,12 @@ public class RecordFragment extends Fragment {
         return view;
     }
 
-    private void connect(final String token_id,String uri){
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    private void connect(final String token_id, String uri){
         RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
@@ -124,8 +129,12 @@ public class RecordFragment extends Fragment {
 
                     );
                 }
-                ArrayAdapter adapter = new Records_IA(getActivity(),lista);
-                listView.setAdapter(adapter);
+                ArrayAdapter adapter;
+                if(getActivity()!=null) {
+                    adapter = new Records_IA(getActivity(), lista);
+                    listView.setAdapter(adapter);
+                }
+
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
