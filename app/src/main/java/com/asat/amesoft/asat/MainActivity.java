@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import android.support.design.widget.NavigationView;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -36,6 +33,7 @@ import com.asat.amesoft.asat.fragments.SettingsFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,17 +45,43 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //token=getIntent().getStringExtra("token");
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-
-
+        toolbar.setTitle(R.string.menu_title);
         setSupportActionBar(toolbar);
 
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         String language =sharedPref.getString("language","en");
         MyApplication.changeLanguage(language,this);
+
+        File filePath = Environment.getExternalStorageDirectory();
+        filePath = new File(filePath.getPath()+"/ASAT");
+        if(!filePath.exists()) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            filePath.mkdirs();
+
+            File aux;
+
+            aux = new File(filePath.getPath()+"/ADVICES");
+            aux.mkdirs();
+            MyApplication.setAdvices_filePath(aux.getPath());
+
+            editor.putString("advices_path", aux.getPath());
+
+            aux = new File(filePath.getPath()+"/RECORD");
+            aux.mkdirs();
+            MyApplication.setRecord_filePath(aux.getPath());
+            editor.putString("record_path", aux.getPath());
+
+            editor.apply();
+        }
+        else{
+            MyApplication.setAdvices_filePath(sharedPref.getString("advices_path",""));
+            MyApplication.setRecord_filePath(sharedPref.getString("record_path",""));
+        }
+
+
 
         if(sharedPref.contains("token")){
             MyApplication.setToken(sharedPref.getString("token","null"));
@@ -75,7 +99,6 @@ public class MainActivity extends AppCompatActivity{
         if(savedInstanceState==null) {
             change_content(new MenuFragment(), false);
         }
-        //token=token.replace("K","q");
 
     }
 
@@ -153,6 +176,19 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                change_content(new MenuFragment(),true);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 
@@ -163,7 +199,7 @@ public class MainActivity extends AppCompatActivity{
         FragmentTransaction ft;
 
         if(f.getClass().equals(MenuFragment.class)){
-            //toolbar.setTitle(R.string.menu_title);
+            toolbar.setTitle(R.string.menu_title);
            // toolbar.setNavigationIcon(null);
         }
         else{

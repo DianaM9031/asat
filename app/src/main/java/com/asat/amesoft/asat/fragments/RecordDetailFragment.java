@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Hospital_ImageItem;
 import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
@@ -125,14 +124,16 @@ public class RecordDetailFragment extends Fragment {
                 tv_text.setText(Html.fromHtml(jsonObject.getString("anam_text")));
                 final ArrayList<String> lista = new ArrayList<>();
                 final ArrayList<String> files = new ArrayList<>();
+                final ArrayList<String> ext = new ArrayList<>();
                 JSONArray reports = jsonObject.getJSONArray("reports");
 
                 for(int i=0; i<reports.length(); i++){
                     JSONObject item = reports.getJSONObject(i).getJSONObject("report");
 
-                  //  Log.v("iteam record file",item.getString("report_file"));
+                    Log.v("iteam record file",item.getString("report_type"));
                     lista.add(item.getString("report_text"));
                     files.add(item.getString("report_file"));
+                    ext.add(item.getString("report_type"));
 
                 }
               ArrayAdapter<String> adapter;
@@ -148,10 +149,12 @@ public class RecordDetailFragment extends Fragment {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        File file = new File(getActivity().getFilesDir().getAbsolutePath()+"/"+lista.get(position));
+                        MimeTypeMap mime = MimeTypeMap.getSingleton();
+                        String mimeType = mime.getMimeTypeFromExtension(ext.get(position));
+                        File file = new File(MyApplication.getRecord_filePath()+lista.get(position));
                         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-                        intent.setDataAndType(Uri.fromFile(file), "application/*");
+                        intent.setDataAndType(Uri.fromFile(file), mimeType);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     }
@@ -165,7 +168,12 @@ public class RecordDetailFragment extends Fragment {
 
     private void saveFile(String encoded, String name) {
         if (getActivity() != null) {
-            final File filePath = new File(getActivity().getFilesDir() + name);
+
+//            final File filePath = new File(getActivity().getFilesDir() + name);
+//            final File filePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) +"/"+ name);
+            File filePath = new File(MyApplication.getRecord_filePath()+name);
+            //filePath = new File(filePath.getPath()+"/record");
+
             Log.v("File URI", filePath.toString());
             byte[] file = Base64.decode(encoded, Base64.CRLF);
             FileOutputStream os = null;

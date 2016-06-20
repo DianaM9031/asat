@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Base64;
@@ -176,7 +175,7 @@ public class AdvicesDetailFragment extends Fragment {
                     advices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            File file = new File(getActivity().getFilesDir().getAbsolutePath()+"/"+lista.get(position));
+                            File file = new File(MyApplication.getAdvices_filePath()+lista.get(position));
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setDataAndType(Uri.fromFile(file), "application/pdf");
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -202,7 +201,7 @@ public class AdvicesDetailFragment extends Fragment {
 
     private void saveFile(String encoded, String name){
         if(getActivity()!=null) {
-            final File filePath = new File(getActivity().getFilesDir() + name);
+            final File filePath = new File(MyApplication.getAdvices_filePath()+ name);
 
             byte[] file = Base64.decode(encoded, 0);
             FileOutputStream os = null;

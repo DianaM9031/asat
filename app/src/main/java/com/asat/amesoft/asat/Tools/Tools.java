@@ -1,6 +1,7 @@
 package com.asat.amesoft.asat.Tools;
 
 import android.content.res.Configuration;
+import android.os.Environment;
 
 import java.util.Locale;
 
@@ -32,6 +33,10 @@ public class Tools {
 
     public static final String notifications = baseURL+"getReminders";
 
+
+    //file path
+//    public static final String notifications= Environment.getExternalStorageDirectory();
+//    public static final String notifications;
 
 
 

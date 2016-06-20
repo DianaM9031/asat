@@ -4,14 +4,11 @@ package com.asat.amesoft.asat.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 
 /**

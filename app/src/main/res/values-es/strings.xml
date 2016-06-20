@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ASAT</string>
-    <string name="action_settings">Configuración</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="actual_pass">Contraseña actual</string>
-    <string name="advice_titile">Título</string>
     <string name="checkbox_agree">Acepto las normas del</string>
     <string name="confirm_new">Confirme nueva contraseña</string>
-    <string name="email"></string>
+    <string name="email">Email</string>
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="error_invalid_email">Este dirección emal es invalida</string>
@@ -26,7 +23,6 @@
     <string name="lopd_termns">Yo he leído y acepto</string>
     <string name="about_title">Acerca de</string>
     <string name="advices_title">Consejos</string>
-    <string name="config_tittle">Configuración</string>
     <string name="hospital_title">Mi hospital</string>
     <string name="notifications_title">Notificaciones</string>
     <string name="record_title">Mi historial</string>
@@ -46,8 +42,8 @@
     <string name="settings_password">Cambiar contraseña</string>
     <string name="settings_save">Guardar</string>
     <string name="settings_title">Configuración</string>
-    <string name="title_activity_main"></string>
-    <string name="title"></string>
     <string name="settings_message">Los cambios fueron guardados</string>
     <string name="new_pass_suceed">Tu contraseña ha sido actualizada</string>
+    <string name="about_version">Versión</string>
+    <string name="menu_title">Menú</string>
 </resources>

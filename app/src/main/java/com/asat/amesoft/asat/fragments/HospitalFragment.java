@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -169,10 +170,9 @@ public class HospitalFragment extends Fragment {
                 center_logo=jsonObject.getString("center_logo");
                 center_title=jsonObject.getString("center_title");
 
-
-
                 title.setText(center_title);
-                description.setText(jsonObject.getString("center_text"));
+
+                description.setText(Html.fromHtml(jsonObject.getString("center_text")));
                 if(jsonObject.getBoolean("center_hasRules")){
                     rules.setVisibility(View.VISIBLE);
                 }

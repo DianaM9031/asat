@@ -18,6 +18,8 @@ public class MyApplication extends Application {
     private static String token;
     private static String name;
     private static String lastName;
+    private static String advices_filePath;
+    private static String record_filePath;
 
     @Override
     public void onCreate() {
@@ -47,6 +49,22 @@ public class MyApplication extends Application {
 
     public static void setToken(String token) {
         MyApplication.token = token;
+    }
+
+    public static String getRecord_filePath() {
+        return record_filePath;
+    }
+
+    public static void setRecord_filePath(String record_filePath) {
+        MyApplication.record_filePath = record_filePath+"/";
+    }
+
+    public static String getAdvices_filePath() {
+        return advices_filePath;
+    }
+
+    public static void setAdvices_filePath(String advices_filePath) {
+        MyApplication.advices_filePath = advices_filePath+"/";
     }
 
     public static  MyApplication getsInstance(){
