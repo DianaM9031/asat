@@ -43,7 +43,6 @@ import java.util.Map;
  */
 public class HospitalFragment extends Fragment {
 
-    private String token;
     String center_title="";
     String center_id="";
     TextView title;
@@ -55,7 +54,7 @@ public class HospitalFragment extends Fragment {
 
     public HospitalFragment() {
         // Required empty public constructor
-        this.token= MyApplication.getToken();
+
     }
 
     @Override
@@ -76,7 +75,7 @@ public class HospitalFragment extends Fragment {
 
         icon = (ImageView) view.findViewById(R.id.hospital_icon);
         listView = (ListView) view.findViewById(R.id.hospital_listView);
-        connect(this.token,Tools.hospital);
+        connect(MyApplication.getToken(),Tools.hospital);
 
         images.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,14 +1,19 @@
 package com.asat.amesoft.asat.fragments;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +33,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,20 +123,68 @@ public class RecordDetailFragment extends Fragment {
             if(result.equals("OK")){
 
                 tv_text.setText(Html.fromHtml(jsonObject.getString("anam_text")));
-                ArrayList<String> lista = new ArrayList<>();
+                final ArrayList<String> lista = new ArrayList<>();
+                final ArrayList<String> files = new ArrayList<>();
                 JSONArray reports = jsonObject.getJSONArray("reports");
 
                 for(int i=0; i<reports.length(); i++){
                     JSONObject item = reports.getJSONObject(i).getJSONObject("report");
+
+                  //  Log.v("iteam record file",item.getString("report_file"));
                     lista.add(item.getString("report_text"));
+                    files.add(item.getString("report_file"));
+
                 }
               ArrayAdapter<String> adapter;
                 if(getActivity()!=null) {
                     adapter = new ArrayAdapter<>(getActivity(), R.layout.row_advices, lista);
                     listView.setAdapter(adapter);
                 }
+
+                for(int i=0; i<files.size(); i++){
+                    saveFile(files.get(i),lista.get(i));
+                }
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        File file = new File(getActivity().getFilesDir().getAbsolutePath()+"/"+lista.get(position));
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                        intent.setDataAndType(Uri.fromFile(file), "application/*");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                    }
+                });
+
             }
         } catch (JSONException e) {
+
+        }
+    }
+
+    private void saveFile(String encoded, String name) {
+        if (getActivity() != null) {
+            final File filePath = new File(getActivity().getFilesDir() + name);
+            Log.v("File URI", filePath.toString());
+            byte[] file = Base64.decode(encoded, Base64.CRLF);
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(filePath, false);
+                os.write(file);
+                os.flush();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
         }
     }

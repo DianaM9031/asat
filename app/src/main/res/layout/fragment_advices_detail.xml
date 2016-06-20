@@ -43,7 +43,7 @@
                 >
                 <TextView
                     android:textColor="@color/colorAccent"
-                    android:text="@string/advice_titile"
+                    android:text="@string/advices_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -75,25 +75,33 @@
         android:orientation="vertical"
         android:layout_weight="3">
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/asat_layout"
+            android:layout_marginBottom="10dp">
             <TextView
                 android:padding="10dp"
                 android:id="@+id/advices_detail_text"
-                android:background="@drawable/asat_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
 
         <TextView
             android:id="@+id/advices_detail_url"
-            android:visibility="gone"
             android:layout_marginTop="15dp"
-            android:padding="5dp"
+            android:visibility="gone"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorBackground"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/asat_layout_green"/>
+        <ListView
+            android:id="@+id/advices_list"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </LinearLayout>

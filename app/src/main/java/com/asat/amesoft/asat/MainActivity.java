@@ -1,5 +1,8 @@
 package com.asat.amesoft.asat;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.design.widget.NavigationView;
@@ -19,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.AboutFragment;
 import com.asat.amesoft.asat.fragments.AdvicesFragment;
@@ -29,21 +33,21 @@ import com.asat.amesoft.asat.fragments.NotificationsFragment;
 import com.asat.amesoft.asat.fragments.RecordFragment;
 import com.asat.amesoft.asat.fragments.SettingsFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
-    public static String token="";
     Toolbar toolbar;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //token=getIntent().getStringExtra("token");
-        token = MyApplication.getToken();
-
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
        // TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -51,15 +55,22 @@ public class MainActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
+        sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        String language =sharedPref.getString("language","en");
+        MyApplication.changeLanguage(language,this);
+
+        if(sharedPref.contains("token")){
+            MyApplication.setToken(sharedPref.getString("token","null"));
+            MyApplication.setName(sharedPref.getString("name","null"));
+            MyApplication.setLastName(sharedPref.getString("lastName","null"));
+            keepSession(MyApplication.getToken(), Tools.keep);
+        }
+        else{
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+
 
         if(savedInstanceState==null) {
             change_content(new MenuFragment(), false);
@@ -69,57 +80,107 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void goHospital(View view){
-        Log.v("STATIC TOKEN",token);
-        Bundle args = new Bundle();
-        args.putString("token",token);
+       // Log.v("STATIC TOKEN",token);
+
         Fragment f = new HospitalFragment();
-        f.setArguments(args);
         change_content(f,true);
         toolbar.setTitle(R.string.hospital_title);
-
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
     public void goRules(View view){
-        Bundle args = new Bundle();
-        args.putString("token",token);
         Fragment f = new HospitalRulesFragment();
-        f.setArguments(args);
         change_content(f,true);
+
     }
 
     public void goRecord(View view){
         Fragment f = new RecordFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.record_title);
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
     public void goAdvices(View view){
         Fragment f = new AdvicesFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.advices_title);
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
     public void goSettings(View view){
         Fragment f = new SettingsFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.settings_title);
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
     public void goAbout(View view){
         Fragment f = new AboutFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.about_title);
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
     public void goNotifications(View view){
         Fragment f = new NotificationsFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.notifications_title);
-        //keepAlive(MyApplication.getToken(), Tools.keep);
+        keepSession(MyApplication.getToken(),Tools.keep);
     }
 
 
-    private void keepAlive(final String token_id,String uri){
+    private void checkSession(String response) {
+
+        JSONObject jsonObject;
+        String result;
+
+        try {
+            jsonObject = new JSONObject(response);
+            result = jsonObject.getJSONObject("response").get("result").toString();
+            //Si el resultado de la consulta esta bien
+            if(result.equals("ERROR")){
+                Intent intent = new Intent(this, LoginActivity.class);
+                //intent.putExtra("token",token);
+                startActivity(intent);
+            }
+            else{
+
+            }
+        } catch (JSONException e) {
+
+        }
+    }
+
+
+
+
+
+
+
+
+    private void change_content(Fragment f, boolean back){
+        FragmentTransaction ft;
+
+        if(f.getClass().equals(MenuFragment.class)){
+            //toolbar.setTitle(R.string.menu_title);
+           // toolbar.setNavigationIcon(null);
+        }
+        else{
+            toolbar.setNavigationIcon(+R.drawable.ic_menu_black_24dp);
+        }
+
+        ft=getSupportFragmentManager().beginTransaction().replace(R.id.content_main,f);
+        if(back){
+            ft.addToBackStack(null).commit();
+        }
+        else{
+         ft.commit(); //
+        }
+    }
+
+
+    private void keepSession(final String token_id, String uri){
         //Volley connection
         RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
@@ -127,10 +188,8 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onResponse(String response) {
-
-                        Log.v("Advices Res",response);
-                        //processResponse(response);
-
+                        Log.v("Test session",response);
+                        checkSession(response);
                     }
                 },
                 new Response.ErrorListener(){
@@ -152,90 +211,5 @@ public class MainActivity extends AppCompatActivity
         queue.add(stringRequest);
 
     }
-
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (item.getItemId()){
-            case android.R.id.home:
-                change_content(new MenuFragment(),true);
-                break;
-        }
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void change_content(Fragment f, boolean back){
-        FragmentTransaction ft;
-
-        if(f.getClass().equals(MenuFragment.class)){
-            toolbar.setNavigationIcon(null);
-        }
-        else{
-            toolbar.setNavigationIcon(+R.drawable.ic_menu_black_24dp);
-        }
-
-        ft=getSupportFragmentManager().beginTransaction().replace(R.id.content_main,f);
-        if(back){
-            ft.addToBackStack(null).commit();
-        }
-        else{
-         ft.commit(); //
-        }
-    }
-
 
 }

@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,6 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +49,7 @@ public class AdvicesDetailFragment extends Fragment {
     private TextView title;
     private TextView text;
     private TextView url;
+    private ListView advices;
     public AdvicesDetailFragment() {
         // Required empty public constructor
     }
@@ -64,6 +71,7 @@ public class AdvicesDetailFragment extends Fragment {
         title = (TextView) view.findViewById(R.id.advices_detail_title);
         text = (TextView) view.findViewById(R.id.advices_detail_text);
         url = (TextView) view.findViewById(R.id.advices_detail_url);
+        advices = (ListView) view.findViewById(R.id.advices_list);
 
         title.setText(sTitle);
 
@@ -131,21 +139,90 @@ public class AdvicesDetailFragment extends Fragment {
             if(result.equals("OK")){
 
                 text.setText(Html.fromHtml(jsonObject.getString("advice_text")));
-                if(!jsonObject.getString("advice_url").equals("null")) {
+
+
+                if(jsonObject.getString("advice_url").equals("null") || !jsonObject.getString("advice_url").isEmpty()) {
+
                     url.setText(jsonObject.getString("advice_url"));
                     url.setVisibility(View.VISIBLE);
                 }
                 else{
                     url.setVisibility(View.GONE);
                 }
+
+                if(!jsonObject.getString("advices").equals("null")) {
+                    advices.setVisibility(View.VISIBLE);
+                    JSONArray lst_advices = jsonObject.getJSONArray("advices");
+                    final ArrayList<String> lista= new ArrayList<>();
+                    final ArrayList<String> files= new ArrayList<>();
+
+                    for(int i=0; i<lst_advices.length();i++){
+                        JSONObject item = lst_advices.getJSONObject(i).getJSONObject("advice_item");
+                        lista.add(item.getString("advice_name"));
+                        files.add(item.getString("advice_file"));
+                    }
+
+                    ArrayAdapter<String> adapter;
+
+                    if(getActivity()!=null) {
+                        adapter = new ArrayAdapter<>(getActivity(), R.layout.row_advices, lista);
+                        advices.setAdapter(adapter);
+                    }
+
+                    for(int i=0; i<files.size(); i++){
+                        saveFile(files.get(i),lista.get(i));
+                    }
+
+                    advices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            File file = new File(getActivity().getFilesDir().getAbsolutePath()+"/"+lista.get(position));
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+                else{
+                    advices.setVisibility(View.GONE);
+                }
+
+
+
             }
             else{
 
             }
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
     }
 
+    private void saveFile(String encoded, String name){
+        if(getActivity()!=null) {
+            final File filePath = new File(getActivity().getFilesDir() + name);
+
+            byte[] file = Base64.decode(encoded, 0);
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(filePath, false);
+                os.write(file);
+                os.flush();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

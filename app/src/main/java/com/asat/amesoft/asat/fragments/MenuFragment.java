@@ -40,6 +40,7 @@ public class MenuFragment extends Fragment {
         if(getActivity()!=null) {
             toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
             toolbar.setNavigationIcon(null);
+            toolbar.setTitle(R.string.menu_title);
         }
         return view;
     }

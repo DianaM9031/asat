@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -18,6 +19,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.Models.Adapters.Hospital_IA;
+import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
@@ -25,8 +28,11 @@ import com.asat.amesoft.asat.fragments.LoginFragment;
 import com.asat.amesoft.asat.fragments.NewPassFragment;
 import com.asat.amesoft.asat.fragments.PassChangeFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,37 +40,28 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     CoordinatorLayout layout;
-    private SharedPreferences sharedPref;
 
+    private boolean session;
+    private SharedPreferences sharedPref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
-
-
-        sharedPref = getSharedPreferences("Preferences",Context.MODE_PRIVATE);
-        String language =sharedPref.getString("language","en");
-        MyApplication.changeLanguage(language,this);
-
-//        if(sharedPref.contains("token")){
-//            MyApplication.setToken(sharedPref.getString("token","null"));
-//            MyApplication.setName(sharedPref.getString("name","null"));
-//            MyApplication.setLastName(sharedPref.getString("lastName","null"));
-//            loadMenu(MyApplication.getToken());
-//        }
+        sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
 
         layout = (CoordinatorLayout) findViewById(R.id.content_login);
-        if(savedInstanceState==null) {
+        if(savedInstanceState==null && !session) {
             change_content(new LoginFragment(), false);
         }
 
 
 
     }
+
+
 
     public void forgot_pass(View view){
         change_content(new NewPassFragment(),true);
@@ -136,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                     Snackbar.make(layout, R.string.msg_newpass, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-                    change_content(new PassChangeFragment(),true);
+                    change_content(new NewPassFragment(),true);
                 }
                 else {
                     if (jsonObject.getBoolean("renew_lopd")) {
@@ -152,7 +149,6 @@ public class LoginActivity extends AppCompatActivity {
                         loadMenu(token);
                     }
                 }
-
             }
             else{
                 Snackbar.make(layout, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
@@ -182,6 +178,9 @@ public class LoginActivity extends AppCompatActivity {
             ft.commit();
         }
     }
+
+
+
 
 
 }

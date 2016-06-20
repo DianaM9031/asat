@@ -120,12 +120,13 @@ public class RecordFragment extends Fragment {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
                     Date date = formatter.parse(fecha);
 
-                    //formatter = new SimpleDateFormat("dd/MM/yyy");
+                    formatter = new SimpleDateFormat("dd/MM/yyy");
 
-                    formatter = new SimpleDateFormat("MM/dd/yyyy");
+//                    formatter = new SimpleDateFormat("MM/dd/yyyy");
 
                     lista.add(
                             new Record_Item(item.getString("anam_id"),item.getString("anam_title"),formatter.format(date))
+//                            new Record_Item(item.getString("anam_id"),item.getString("anam_title"),fecha)
 
                     );
                 }
@@ -157,7 +158,8 @@ public class RecordFragment extends Fragment {
             }
         } catch (JSONException e) {
 
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
     }
