@@ -3,15 +3,14 @@ package com.asat.amesoft.asat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -19,20 +18,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.Models.Adapters.Hospital_IA;
-import com.asat.amesoft.asat.Models.Hospital_Item;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
 import com.asat.amesoft.asat.fragments.LoginFragment;
 import com.asat.amesoft.asat.fragments.NewPassFragment;
-import com.asat.amesoft.asat.fragments.PassChangeFragment;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText pass = (EditText) findViewById(R.id.login_password);
 
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.login,
                 new Response.Listener<String>(){
 
@@ -125,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("lastName", lastName);
                 editor.apply();
 
-                MyApplication.setToken(token);
-                MyApplication.setName(name);
-                MyApplication.setLastName(lastName);
+                Tools.setToken(token);
+                Tools.setName(name);
+                Tools.setLastName(lastName);
 
                 if(jsonObject.getBoolean("renew_pass")){
                     Snackbar.make(layout, R.string.msg_newpass, Snackbar.LENGTH_LONG)

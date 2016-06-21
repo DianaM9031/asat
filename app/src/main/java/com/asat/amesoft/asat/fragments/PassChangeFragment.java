@@ -18,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -105,7 +104,7 @@ public class PassChangeFragment extends Fragment {
 
     private void connect(){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.change_pass,
                 new Response.Listener<String>(){
 
@@ -128,7 +127,7 @@ public class PassChangeFragment extends Fragment {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String,String>();
-                params.put("user_name", MyApplication.getName());
+                params.put("user_name", Tools.getName());
                 params.put("pass_old",actual.getText().toString());
                 params.put("pass_new",newPass.getText().toString());
                 return params;

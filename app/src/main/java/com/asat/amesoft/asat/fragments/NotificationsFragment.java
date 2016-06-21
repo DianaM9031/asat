@@ -21,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.Models.Adapters.Notifications_IA;
 import com.asat.amesoft.asat.Models.Notifications_Item;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -50,14 +49,14 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-        connect(MyApplication.getToken(), Tools.notifications);
+        connect(Tools.getToken(), Tools.notifications);
         listView = (ListView) view.findViewById(R.id.notifications_list);
         return view;
     }
 
     private void connect(final String token_id,String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -140,7 +139,7 @@ public class NotificationsFragment extends Fragment {
             else{
                 Snackbar.make(listView, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
-                Log.v("Expired token",MyApplication.getToken());
+                Log.v("Expired token",Tools.getToken());
             }
         } catch (JSONException e) {
 

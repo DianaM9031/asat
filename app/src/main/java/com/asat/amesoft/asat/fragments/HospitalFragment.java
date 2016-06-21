@@ -26,7 +26,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.Models.Adapters.Hospital_IA;
 import com.asat.amesoft.asat.Models.Hospital_Item;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -76,7 +75,7 @@ public class HospitalFragment extends Fragment {
 
         icon = (ImageView) view.findViewById(R.id.hospital_icon);
         listView = (ListView) view.findViewById(R.id.hospital_listView);
-        connect(MyApplication.getToken(),Tools.hospital);
+        connect(Tools.getToken(),Tools.hospital);
 
         images.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +119,7 @@ public class HospitalFragment extends Fragment {
 
     private void connect(final String token_id,String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 

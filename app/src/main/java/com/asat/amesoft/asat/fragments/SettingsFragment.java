@@ -3,7 +3,6 @@ package com.asat.amesoft.asat.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
+import com.asat.amesoft.asat.Tools.Tools;
 
 import java.util.Locale;
 
@@ -112,7 +111,7 @@ public class SettingsFragment extends Fragment {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("language", languageToLoad);
         editor.apply();
-        MyApplication.changeLanguage(languageToLoad,getActivity());
+        Tools.changeLanguage(languageToLoad,getActivity());
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();

@@ -1,7 +1,5 @@
 package com.asat.amesoft.asat.Models;
 
-import java.util.Date;
-
 /**
  * Created by Jorge on 10/05/2016.
  */

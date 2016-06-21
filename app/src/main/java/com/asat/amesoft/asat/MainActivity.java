@@ -6,17 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,9 +38,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +58,7 @@ public class MainActivity extends AppCompatActivity{
 
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         String language = sharedPref.getString("language", "en");
-        MyApplication.changeLanguage(language, this);
+        Tools.changeLanguage(language, this);
 
 
         if (ContextCompat.checkSelfPermission(this,
@@ -99,10 +93,10 @@ public class MainActivity extends AppCompatActivity{
 
 
         if(sharedPref.contains("token")){
-            MyApplication.setToken(sharedPref.getString("token","null"));
-            MyApplication.setName(sharedPref.getString("name","null"));
-            MyApplication.setLastName(sharedPref.getString("lastName","null"));
-            keepSession(MyApplication.getToken(), Tools.keep);
+            Tools.setToken(sharedPref.getString("token","null"));
+            Tools.setName(sharedPref.getString("name","null"));
+            Tools.setLastName(sharedPref.getString("lastName","null"));
+            keepSession(Tools.getToken(), Tools.keep);
         }
         else{
             Intent intent = new Intent(this, LoginActivity.class);
@@ -132,11 +126,11 @@ public class MainActivity extends AppCompatActivity{
                     rec.mkdirs();
             }
 
-            MyApplication.setAsatRoot(asatRoot.getPath());
+            Tools.setAsatRoot(asatRoot.getPath());
 
-            File hos_logo = new File(MyApplication.getAsatRoot() + "hos_logo");
+            File hos_logo = new File(Tools.getAsatRoot() + "hos_logo");
             if (!hos_logo.exists()) {
-                getHospitalLogo(MyApplication.getToken(), Tools.hospital);
+                getHospitalLogo(Tools.getToken(), Tools.hospital);
             }
 
     }
@@ -147,7 +141,7 @@ public class MainActivity extends AppCompatActivity{
         Fragment f = new HospitalFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.hospital_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goRules(View view){
@@ -160,35 +154,35 @@ public class MainActivity extends AppCompatActivity{
         Fragment f = new RecordFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.record_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goAdvices(View view){
         Fragment f = new AdvicesFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.advices_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goSettings(View view){
         Fragment f = new SettingsFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.settings_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goAbout(View view){
         Fragment f = new AboutFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.about_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goNotifications(View view){
         Fragment f = new NotificationsFragment();
         change_content(f,true);
         toolbar.setTitle(R.string.notifications_title);
-        keepSession(MyApplication.getToken(),Tools.keep);
+        keepSession(Tools.getToken(),Tools.keep);
     }
 
 
@@ -253,7 +247,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void keepSession(final String token_id, String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -287,7 +281,7 @@ public class MainActivity extends AppCompatActivity{
     private void getHospitalLogo(final String token_id,String uri){
         //Volley connection
         //Log.v("GET HOSPITAL LOGO0","Deberia estar durmiendo0");
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -334,7 +328,7 @@ public class MainActivity extends AppCompatActivity{
             Log.v("hos response",jsonObject.names().toString());
             if(result.equals("OK")){
                 center_logo=jsonObject.getString("center_logo");
-                    Tools.saveFile(center_logo,"hos_logo.png",MyApplication.getAsatRoot());
+                    Tools.saveFile(center_logo,"hos_logo.png",Tools.getAsatRoot());
 
 
             }

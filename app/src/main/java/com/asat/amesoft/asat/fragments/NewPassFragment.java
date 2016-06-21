@@ -83,7 +83,7 @@ public class NewPassFragment extends Fragment {
 
     private void connect(final String token_id){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Tools.newPass,
                 new Response.Listener<String>(){
 

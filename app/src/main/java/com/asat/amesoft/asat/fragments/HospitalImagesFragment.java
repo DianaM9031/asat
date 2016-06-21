@@ -23,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.Models.Adapters.Hospital_Image_IA;
 import com.asat.amesoft.asat.Models.Hospital_ImageItem;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -47,7 +46,7 @@ public class HospitalImagesFragment extends Fragment {
 
     public HospitalImagesFragment() {
         // Required empty public constructor
-        this.token = MyApplication.getToken();
+        this.token = Tools.getToken();
     }
 
     @Override
@@ -75,7 +74,7 @@ public class HospitalImagesFragment extends Fragment {
     }
 
     private void connect(final String token_id,String uri){
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 

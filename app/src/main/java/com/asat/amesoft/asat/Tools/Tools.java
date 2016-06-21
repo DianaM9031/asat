@@ -1,7 +1,7 @@
 package com.asat.amesoft.asat.Tools;
 
+import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
@@ -17,6 +17,10 @@ import java.util.Locale;
 public class Tools {
 
     public static boolean permission;
+    private static String token;
+    private static String name;
+    private static String lastName;
+    private static String asatRoot;
 
     public static final String baseURL = "http://interno.talentosoftware.com:55955/api/";
     public static final String login = baseURL+"login";
@@ -73,6 +77,60 @@ public class Tools {
         }
             return false;
 
+    }
+
+
+
+
+    public static String getLastName() {
+        return lastName;
+    }
+
+    public static void setLastName(String lastName) {
+        Tools.lastName = lastName;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        Tools.name = name;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        Tools.token = token;
+    }
+
+    public static String getRecord_filePath() {
+        return Tools.asatRoot+"/RECORD/";
+    }
+
+
+    public static String getAdvices_filePath() {
+        return Tools.asatRoot+"/ADVICES/";
+    }
+
+    public static String getAsatRoot() {
+        return asatRoot+"/";
+    }
+
+    public static void setAsatRoot(String asatRoot) {
+        Tools.asatRoot = asatRoot;
+    }
+
+
+    public static void changeLanguage(String languageToLoad, Context context){
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config,
+                context.getApplicationContext().getResources().getDisplayMetrics());
     }
 
 

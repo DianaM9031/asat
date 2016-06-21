@@ -10,17 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +36,7 @@ public class HospitalRulesFragment extends Fragment {
 
     public HospitalRulesFragment() {
         // Required empty public constructor
-        this.token = MyApplication.getToken();
+        this.token = Tools.getToken();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class HospitalRulesFragment extends Fragment {
 
 
     private void connect(final String token_id,String uri){
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 

@@ -1,7 +1,5 @@
 package com.asat.amesoft.asat.Models;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by Jorge on 28/04/2016.
  */

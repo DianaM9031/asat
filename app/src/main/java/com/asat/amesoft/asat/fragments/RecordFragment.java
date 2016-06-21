@@ -19,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.Models.Adapters.Records_IA;
 import com.asat.amesoft.asat.Models.Record_Item;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -45,7 +44,7 @@ public class RecordFragment extends Fragment {
 
     public RecordFragment() {
         // Required empty public constructor
-        this.token= MyApplication.getToken();
+        this.token= Tools.getToken();
     }
 
 
@@ -56,8 +55,8 @@ public class RecordFragment extends Fragment {
 
         TextView name = (TextView) view.findViewById(R.id.record_name);
         TextView lastName = (TextView) view.findViewById(R.id.record_lastname);
-        name.setText(MyApplication.getName());
-        lastName.setText(MyApplication.getLastName());
+        name.setText(Tools.getName());
+        lastName.setText(Tools.getLastName());
 
         listView = (ListView) view.findViewById(R.id.record_list);
         connect(this.token, Tools.record);
@@ -71,7 +70,7 @@ public class RecordFragment extends Fragment {
     }
 
     private void connect(final String token_id, String uri){
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -88,13 +86,13 @@ public class AdvicesDetailFragment extends Fragment {
             }
         });
 
-        connect(MyApplication.getToken(), Tools.advicesDetail);
+        connect(Tools.getToken(), Tools.advicesDetail);
         return view;
     }
 
     private void connect(final String token_id,String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -181,7 +179,7 @@ public class AdvicesDetailFragment extends Fragment {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             MimeTypeMap mime = MimeTypeMap.getSingleton();
                             String mimeType = mime.getMimeTypeFromExtension(ext.get(position));
-                            File file = new File(MyApplication.getAdvices_filePath()+lista.get(position));
+                            File file = new File(Tools.getAdvices_filePath()+lista.get(position));
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setDataAndType(Uri.fromFile(file), mimeType);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -204,7 +202,7 @@ public class AdvicesDetailFragment extends Fragment {
 
     private void saveFile(String encoded, String name){
         if(getActivity()!=null) {
-            File filePath = new File(MyApplication.getAdvices_filePath()+ name);
+            File filePath = new File(Tools.getAdvices_filePath()+ name);
 
             byte[] file = Base64.decode(encoded, 0);
             FileOutputStream os = null;

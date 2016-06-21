@@ -6,16 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.asat.amesoft.asat.Models.Notifications_Item;
 import com.asat.amesoft.asat.R;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jorge on 20/06/2016.

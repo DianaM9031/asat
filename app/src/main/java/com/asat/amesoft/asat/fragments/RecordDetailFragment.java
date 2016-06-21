@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -79,7 +78,7 @@ public class RecordDetailFragment extends Fragment {
 
 
     private void connect(String uri){
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -101,7 +100,7 @@ public class RecordDetailFragment extends Fragment {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String,String>();
-                params.put("token_id", MyApplication.getToken());
+                params.put("token_id", Tools.getToken());
                 params.put("anam_id",id);
                 return params;
             }
@@ -151,7 +150,7 @@ public class RecordDetailFragment extends Fragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         MimeTypeMap mime = MimeTypeMap.getSingleton();
                         String mimeType = mime.getMimeTypeFromExtension(ext.get(position));
-                        File file = new File(MyApplication.getRecord_filePath()+lista.get(position));
+                        File file = new File(Tools.getRecord_filePath()+lista.get(position));
                         Intent intent = new Intent(Intent.ACTION_VIEW);
 
                         intent.setDataAndType(Uri.fromFile(file), mimeType);
@@ -169,7 +168,7 @@ public class RecordDetailFragment extends Fragment {
     private void saveFile(String encoded, String name) {
         if (getActivity() != null) {
 
-            File filePath = new File(MyApplication.getRecord_filePath()+name);
+            File filePath = new File(Tools.getRecord_filePath()+name);
 
 
             Log.v("File URI", filePath.toString());

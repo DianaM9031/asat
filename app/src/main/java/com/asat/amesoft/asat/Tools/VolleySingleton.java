@@ -1,12 +1,12 @@
 package com.asat.amesoft.asat.Tools;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.asat.amesoft.asat.MyApplication;
 
 /**
  * Created by Jorge on 20/04/2016.
@@ -17,8 +17,8 @@ public class VolleySingleton {
     private RequestQueue requestQueue;
     private ImageLoader mImageLoader;
 
-    private VolleySingleton(){
-        requestQueue = Volley.newRequestQueue(MyApplication.getAppContext());
+    private VolleySingleton(Context context){
+        requestQueue = Volley.newRequestQueue(context);
 
         mImageLoader = new ImageLoader(requestQueue,
                 new ImageLoader.ImageCache() {
@@ -42,9 +42,9 @@ public class VolleySingleton {
         return mImageLoader;
     }
 
-    public static VolleySingleton getInstance(){
+    public static VolleySingleton getInstance(Context context){
         if(sInstance==null){
-            sInstance=new VolleySingleton();
+            sInstance=new VolleySingleton(context);
         }
         return sInstance;
     }

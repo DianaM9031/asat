@@ -21,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.asat.amesoft.asat.MainActivity;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -46,7 +45,7 @@ public class LOPDFragment extends Fragment {
 
     public LOPDFragment() {
         accept=false;
-        token = MyApplication.getToken();
+        token = Tools.getToken();
     }
 
     @Override
@@ -91,7 +90,7 @@ public class LOPDFragment extends Fragment {
         }
 
 
-        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue requestQueue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, Tools.getLODP,
                 new Response.Listener<String>(){
 
@@ -169,7 +168,7 @@ public class LOPDFragment extends Fragment {
 
 
     private void connect(String uri){
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 

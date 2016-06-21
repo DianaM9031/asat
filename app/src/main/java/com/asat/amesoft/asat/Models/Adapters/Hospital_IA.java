@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.asat.amesoft.asat.Models.Hospital_Item;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 
@@ -25,7 +23,7 @@ public class Hospital_IA extends ArrayAdapter<Hospital_Item> {
     ImageLoader mImageLoader;
     public Hospital_IA(Context context, ArrayList<Hospital_Item> values) {
         super(context, R.layout.row_hospital, values);
-        mImageLoader = VolleySingleton.getInstance().getImageLoader();
+        mImageLoader = VolleySingleton.getInstance(context.getApplicationContext()).getImageLoader();
     }
 
     class ViewHolder{

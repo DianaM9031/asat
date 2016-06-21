@@ -4,7 +4,6 @@ package com.asat.amesoft.asat.fragments;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.asat.amesoft.asat.MyApplication;
 import com.asat.amesoft.asat.R;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
@@ -52,16 +50,16 @@ public class AdvicesFragment extends Fragment {
 
         TextView name = (TextView) view.findViewById(R.id.advices_name);
         TextView lastName = (TextView) view.findViewById(R.id.advices_lastname);
-        name.setText(MyApplication.getName());
-        lastName.setText(MyApplication.getLastName());
+        name.setText(Tools.getName());
+        lastName.setText(Tools.getLastName());
 
-        connect(MyApplication.getToken(), Tools.advices);
+        connect(Tools.getToken(), Tools.advices);
         return view;
     }
 
     private void connect(final String token_id,String uri){
         //Volley connection
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(getActivity().getApplicationContext()).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
 
@@ -140,7 +138,7 @@ public class AdvicesFragment extends Fragment {
             else{
                 Snackbar.make(listView, jsonObject.getJSONObject("response").get("msg").toString(), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
-                Log.v("Expired token",MyApplication.getToken());
+                Log.v("Expired token",Tools.getToken());
             }
         } catch (JSONException e) {
 
