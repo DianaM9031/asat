@@ -76,7 +76,8 @@
         android:layout_weight="3">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:background="@drawable/asat_layout"
             android:layout_marginBottom="10dp">
             <TextView
@@ -92,7 +93,8 @@
             android:visibility="gone"
             android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
             android:textColor="@color/colorBackground"
             android:layout_marginBottom="10dp"
             android:background="@drawable/asat_layout_green"/>
@@ -100,7 +102,8 @@
             android:id="@+id/advices_list"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

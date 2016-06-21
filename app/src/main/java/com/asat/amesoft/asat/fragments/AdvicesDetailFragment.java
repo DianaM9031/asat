@@ -6,12 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -139,9 +141,7 @@ public class AdvicesDetailFragment extends Fragment {
 
                 text.setText(Html.fromHtml(jsonObject.getString("advice_text")));
 
-
-                if(jsonObject.getString("advice_url").equals("null") || !jsonObject.getString("advice_url").isEmpty()) {
-
+                if(!jsonObject.getString("advice_url").equals("null") && !jsonObject.getString("advice_url").isEmpty()) {
                     url.setText(jsonObject.getString("advice_url"));
                     url.setVisibility(View.VISIBLE);
                 }
@@ -149,16 +149,20 @@ public class AdvicesDetailFragment extends Fragment {
                     url.setVisibility(View.GONE);
                 }
 
-                if(!jsonObject.getString("advices").equals("null")) {
-                    advices.setVisibility(View.VISIBLE);
+
                     JSONArray lst_advices = jsonObject.getJSONArray("advices");
+                if(lst_advices.length()>0) {
+                    advices.setVisibility(View.VISIBLE);
                     final ArrayList<String> lista= new ArrayList<>();
                     final ArrayList<String> files= new ArrayList<>();
+                    final ArrayList<String> ext= new ArrayList<>();
 
                     for(int i=0; i<lst_advices.length();i++){
                         JSONObject item = lst_advices.getJSONObject(i).getJSONObject("advice_item");
+                        Log.v("Advices item ",item.names().toString());
                         lista.add(item.getString("advice_name"));
                         files.add(item.getString("advice_file"));
+                        ext.add(item.getString("advice_type"));
                     }
 
                     ArrayAdapter<String> adapter;
@@ -175,9 +179,11 @@ public class AdvicesDetailFragment extends Fragment {
                     advices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            MimeTypeMap mime = MimeTypeMap.getSingleton();
+                            String mimeType = mime.getMimeTypeFromExtension(ext.get(position));
                             File file = new File(MyApplication.getAdvices_filePath()+lista.get(position));
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+                            intent.setDataAndType(Uri.fromFile(file), mimeType);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                             startActivity(intent);
                         }
@@ -187,9 +193,6 @@ public class AdvicesDetailFragment extends Fragment {
                 else{
                     advices.setVisibility(View.GONE);
                 }
-
-
-
             }
             else{
 
@@ -201,7 +204,7 @@ public class AdvicesDetailFragment extends Fragment {
 
     private void saveFile(String encoded, String name){
         if(getActivity()!=null) {
-            final File filePath = new File(MyApplication.getAdvices_filePath()+ name);
+            File filePath = new File(MyApplication.getAdvices_filePath()+ name);
 
             byte[] file = Base64.decode(encoded, 0);
             FileOutputStream os = null;

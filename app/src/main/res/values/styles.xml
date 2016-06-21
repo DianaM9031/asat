@@ -16,8 +16,7 @@
 
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" >
-
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
     </style>
 
 

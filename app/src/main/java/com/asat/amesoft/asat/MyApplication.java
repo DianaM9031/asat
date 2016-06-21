@@ -18,8 +18,7 @@ public class MyApplication extends Application {
     private static String token;
     private static String name;
     private static String lastName;
-    private static String advices_filePath;
-    private static String record_filePath;
+    private static String asatRoot;
 
     @Override
     public void onCreate() {
@@ -52,19 +51,20 @@ public class MyApplication extends Application {
     }
 
     public static String getRecord_filePath() {
-        return record_filePath;
+        return MyApplication.asatRoot+"/RECORD/";
     }
 
-    public static void setRecord_filePath(String record_filePath) {
-        MyApplication.record_filePath = record_filePath+"/";
-    }
 
     public static String getAdvices_filePath() {
-        return advices_filePath;
+        return MyApplication.asatRoot+"/ADVICES/";
     }
 
-    public static void setAdvices_filePath(String advices_filePath) {
-        MyApplication.advices_filePath = advices_filePath+"/";
+    public static String getAsatRoot() {
+        return asatRoot;
+    }
+
+    public static void setAsatRoot(String asatRoot) {
+        MyApplication.asatRoot = asatRoot;
     }
 
     public static  MyApplication getsInstance(){

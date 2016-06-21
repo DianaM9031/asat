@@ -1,15 +1,21 @@
 package com.asat.amesoft.asat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,11 +40,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1 ;
     Toolbar toolbar;
     private SharedPreferences sharedPref;
 
@@ -54,34 +64,51 @@ public class MainActivity extends AppCompatActivity{
         String language =sharedPref.getString("language","en");
         MyApplication.changeLanguage(language,this);
 
-        File filePath = Environment.getExternalStorageDirectory();
-        filePath = new File(filePath.getPath()+"/ASAT");
-        if(!filePath.exists()) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+        getHospitalLogo(MyApplication.getToken(),Tools.hospital);
 
-            filePath.mkdirs();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
-            File aux;
+//             Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-            aux = new File(filePath.getPath()+"/ADVICES");
-            aux.mkdirs();
-            MyApplication.setAdvices_filePath(aux.getPath());
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
 
-            editor.putString("advices_path", aux.getPath());
+            } else {
 
-            aux = new File(filePath.getPath()+"/RECORD");
-            aux.mkdirs();
-            MyApplication.setRecord_filePath(aux.getPath());
-            editor.putString("record_path", aux.getPath());
+                // No explanation needed, we can request the permission.
 
-            editor.apply();
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
         }
-        else{
-            MyApplication.setAdvices_filePath(sharedPref.getString("advices_path",""));
-            MyApplication.setRecord_filePath(sharedPref.getString("record_path",""));
+
+
+        File asatRoot = Environment.getExternalStorageDirectory();
+        asatRoot = new File(asatRoot.getPath()+"/ASAT");
+        File advi = new File(asatRoot.getPath()+"/ADVICES");
+        File rec = new File(asatRoot.getPath()+"/RECORD");
+
+
+        if(!asatRoot.exists()) {
+            asatRoot.mkdirs();
+            if(!advi.exists())
+                advi.mkdirs();
+            if(!rec.exists())
+                rec.mkdirs();
+
         }
 
-
+        MyApplication.setAsatRoot(asatRoot.getPath());
 
         if(sharedPref.contains("token")){
             MyApplication.setToken(sharedPref.getString("token","null"));
@@ -245,6 +272,96 @@ public class MainActivity extends AppCompatActivity{
             }
         };
         queue.add(stringRequest);
+
+    }
+
+
+    private void getHospitalLogo(final String token_id,String uri){
+        //Volley connection
+        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
+                new Response.Listener<String>(){
+
+                    @Override
+                    public void onResponse(String response) {
+
+                         Log.v("GET HOSPITAL LOGO","Deberia estar durmiendo");
+                        //Log.v("HosRes",response.substring(response.length()/2+2200,response.length()));
+                        processHospitalLogo(response);
+
+                    }
+                },
+                new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("response","Errors  happens");
+                    }
+                }
+        )
+        {
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<>();
+                params.put("token_id",token_id);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
+
+    private void processHospitalLogo(String response) {
+        Log.v("GET HOSPITAL LOGO2","Deberia estar durmiendo2");
+        JSONObject jsonObject;
+        String result;
+
+
+        String center_logo;
+        try {
+            jsonObject = new JSONObject(response);
+            result = jsonObject.getJSONObject("response").get("result").toString();
+            //Si el resultado de la consulta esta bien
+            Log.v("hos response",jsonObject.names().toString());
+            if(result.equals("OK")){
+                center_logo=jsonObject.getString("center_logo");
+                saveFile(center_logo,"hos_logo.jgp");
+                //se cambia el logo del hospital luego de decodificar la imagen
+              //  icon.setImageBitmap(decodeImage(center_logo));
+
+            }
+            else{
+                //process error
+            }
+        } catch (JSONException e) {
+
+        }
+    }
+
+    private void saveFile(String encoded, String name) {
+
+            File filePath = new File(MyApplication.getAsatRoot()+name);
+
+
+            Log.v("File URI", filePath.toString());
+            byte[] file = Base64.decode(encoded, Base64.CRLF);
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(filePath, false);
+                os.write(file);
+                os.flush();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
     }
 

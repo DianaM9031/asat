@@ -169,10 +169,8 @@ public class RecordDetailFragment extends Fragment {
     private void saveFile(String encoded, String name) {
         if (getActivity() != null) {
 
-//            final File filePath = new File(getActivity().getFilesDir() + name);
-//            final File filePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) +"/"+ name);
             File filePath = new File(MyApplication.getRecord_filePath()+name);
-            //filePath = new File(filePath.getPath()+"/record");
+
 
             Log.v("File URI", filePath.toString());
             byte[] file = Base64.decode(encoded, Base64.CRLF);
