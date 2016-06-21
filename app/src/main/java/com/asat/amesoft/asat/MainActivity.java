@@ -60,37 +60,41 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle(R.string.menu_title);
         setSupportActionBar(toolbar);
 
+        Log.v("Skip","1");
+       // getHospitalLogo(MyApplication.getToken(),Tools.hospital);
+        Log.v("Skip","2");
+
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         String language =sharedPref.getString("language","en");
         MyApplication.changeLanguage(language,this);
 
-        getHospitalLogo(MyApplication.getToken(),Tools.hospital);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
 
-//             Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
+//        if (ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+////             Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//
+//                // Show an expanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//
+//            } else {
+//
+//                // No explanation needed, we can request the permission.
+//
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//
+//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                // app-defined int constant. The callback method gets the
+//                // result of the request.
+//            }
+//        }
 
 
         File asatRoot = Environment.getExternalStorageDirectory();
@@ -218,10 +222,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
-
-
-
     private void change_content(Fragment f, boolean back){
         FragmentTransaction ft;
 
@@ -278,6 +278,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void getHospitalLogo(final String token_id,String uri){
         //Volley connection
+        //Log.v("GET HOSPITAL LOGO0","Deberia estar durmiendo0");
         RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, uri,
                 new Response.Listener<String>(){
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(String response) {
 
-                         Log.v("GET HOSPITAL LOGO","Deberia estar durmiendo");
+                         Log.v("GET HOSPITAL LOGO",response);
                         //Log.v("HosRes",response.substring(response.length()/2+2200,response.length()));
                         processHospitalLogo(response);
 

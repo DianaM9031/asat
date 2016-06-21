@@ -60,7 +60,7 @@ public class MyApplication extends Application {
     }
 
     public static String getAsatRoot() {
-        return asatRoot;
+        return asatRoot+"/";
     }
 
     public static void setAsatRoot(String asatRoot) {
