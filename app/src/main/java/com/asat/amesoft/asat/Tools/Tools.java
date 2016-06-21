@@ -2,13 +2,21 @@ package com.asat.amesoft.asat.Tools;
 
 import android.content.res.Configuration;
 import android.os.Environment;
+import android.util.Base64;
+import android.util.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 /**
  * Created by Jorge on 20/04/2016.
  */
 public class Tools {
+
+    public static boolean permission;
 
     public static final String baseURL = "http://interno.talentosoftware.com:55955/api/";
     public static final String login = baseURL+"login";
@@ -38,6 +46,34 @@ public class Tools {
 //    public static final String notifications= Environment.getExternalStorageDirectory();
 //    public static final String notifications;
 
+    public static boolean saveFile(String encoded, String name, String uri) {
+        if(permission){
+
+            File filePath = new File(uri + name);
+            Log.v("File URI", filePath.toString());
+            byte[] file = Base64.decode(encoded, Base64.CRLF);
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(filePath, false);
+                os.write(file);
+                os.flush();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+            return false;
+
+    }
 
 
 }

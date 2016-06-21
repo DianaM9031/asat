@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -48,7 +49,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
 
-    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1 ;
+    private static final int MY_PERMISSIONS_EXTERNAL_STORAGE = 1 ;
     Toolbar toolbar;
     private SharedPreferences sharedPref;
 
@@ -60,59 +61,42 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle(R.string.menu_title);
         setSupportActionBar(toolbar);
 
-        Log.v("Skip","1");
-       // getHospitalLogo(MyApplication.getToken(),Tools.hospital);
-        Log.v("Skip","2");
 
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        String language =sharedPref.getString("language","en");
-        MyApplication.changeLanguage(language,this);
+        String language = sharedPref.getString("language", "en");
+        MyApplication.changeLanguage(language, this);
 
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-////             Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//
-//                // Show an expanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//
-//            } else {
-//
-//                // No explanation needed, we can request the permission.
-//
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-//
-//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                // app-defined int constant. The callback method gets the
-//                // result of the request.
-//            }
-//        }
+//             Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
 
-        File asatRoot = Environment.getExternalStorageDirectory();
-        asatRoot = new File(asatRoot.getPath()+"/ASAT");
-        File advi = new File(asatRoot.getPath()+"/ADVICES");
-        File rec = new File(asatRoot.getPath()+"/RECORD");
+            } else {
 
+                // No explanation needed, we can request the permission.
 
-        if(!asatRoot.exists()) {
-            asatRoot.mkdirs();
-            if(!advi.exists())
-                advi.mkdirs();
-            if(!rec.exists())
-                rec.mkdirs();
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_EXTERNAL_STORAGE);
 
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        else{
+            configFilesDirectory();
         }
 
-        MyApplication.setAsatRoot(asatRoot.getPath());
+
 
         if(sharedPref.contains("token")){
             MyApplication.setToken(sharedPref.getString("token","null"));
@@ -130,6 +114,30 @@ public class MainActivity extends AppCompatActivity{
         if(savedInstanceState==null) {
             change_content(new MenuFragment(), false);
         }
+
+    }
+
+    private void configFilesDirectory() {
+        File asatRoot = Environment.getExternalStorageDirectory();
+        asatRoot = new File(asatRoot.getPath() + "/ASAT");
+        File advi = new File(asatRoot.getPath() + "/ADVICES");
+        File rec = new File(asatRoot.getPath() + "/RECORD");
+        File img = new File(asatRoot.getPath() + "/HOSPITAL");
+
+            if (!asatRoot.exists()) {
+                asatRoot.mkdirs();
+                if (!advi.exists())
+                    advi.mkdirs();
+                if (!rec.exists())
+                    rec.mkdirs();
+            }
+
+            MyApplication.setAsatRoot(asatRoot.getPath());
+
+            File hos_logo = new File(MyApplication.getAsatRoot() + "hos_logo");
+            if (!hos_logo.exists()) {
+                getHospitalLogo(MyApplication.getToken(), Tools.hospital);
+            }
 
     }
 
@@ -326,9 +334,8 @@ public class MainActivity extends AppCompatActivity{
             Log.v("hos response",jsonObject.names().toString());
             if(result.equals("OK")){
                 center_logo=jsonObject.getString("center_logo");
-                saveFile(center_logo,"hos_logo.jgp");
-                //se cambia el logo del hospital luego de decodificar la imagen
-              //  icon.setImageBitmap(decodeImage(center_logo));
+                    Tools.saveFile(center_logo,"hos_logo.png",MyApplication.getAsatRoot());
+
 
             }
             else{
@@ -339,31 +346,20 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void saveFile(String encoded, String name) {
-
-            File filePath = new File(MyApplication.getAsatRoot()+name);
 
 
-            Log.v("File URI", filePath.toString());
-            byte[] file = Base64.decode(encoded, Base64.CRLF);
-            FileOutputStream os = null;
-            try {
-                os = new FileOutputStream(filePath, false);
-                os.write(file);
-                os.flush();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        switch (requestCode){
+            case MY_PERMISSIONS_EXTERNAL_STORAGE:
+                Tools.permission=true;
+                configFilesDirectory();
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
+
 
 }

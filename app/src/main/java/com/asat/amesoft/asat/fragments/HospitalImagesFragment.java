@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -114,17 +115,34 @@ public class HospitalImagesFragment extends Fragment {
             result = jsonObject.getJSONObject("response").get("result").toString();
             //Si el resultado de la consulta esta bien
             if(result.equals("OK")){
-                ArrayList<Hospital_ImageItem> lista = new ArrayList<>();
+                final ArrayList<Hospital_ImageItem> lista = new ArrayList<>();
+                final ArrayList<String> imagenes = new ArrayList<>();
                 JSONArray images = jsonObject.getJSONArray("lst_images");
                 for(int i=0; i<images.length(); i++){
                     JSONObject item = images.getJSONObject(i).getJSONObject("item_img");
+                    Log.v("JSON image",item.names().toString());
                     lista.add(
                             new Hospital_ImageItem(decodeImage(item.getString("img")),item.getString("img_text"))
-
                     );
+                    imagenes.add(item.getString("img"));
                 }
                 BaseAdapter adapter = new Hospital_Image_IA(getActivity(),lista);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Fragment f = new ImageDetail_Fragment();
+                        Bundle arg = new Bundle();
+                        arg.putString("imagen",imagenes.get(position));
+                        f.setArguments(arg);
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_main,f)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
 
             }
         } catch (JSONException e) {
