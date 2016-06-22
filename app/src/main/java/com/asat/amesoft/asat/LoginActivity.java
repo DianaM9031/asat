@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.Tools.MyFirebaseInstanceIDService;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.LOPDFragment;
@@ -34,10 +35,9 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     CoordinatorLayout layout;
-
     private boolean session;
+    MyFirebaseInstanceIDService obj;
     private SharedPreferences sharedPref;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
-
         layout = (CoordinatorLayout) findViewById(R.id.content_login);
         if(savedInstanceState==null && !session) {
             change_content(new LoginFragment(), false);
         }
-
-
-
+        obj = new MyFirebaseInstanceIDService();
+        obj.onTokenRefresh();
     }
-
-
 
     public void forgot_pass(View view){
         change_content(new NewPassFragment(),true);
@@ -85,15 +81,19 @@ public class LoginActivity extends AppCompatActivity {
                                 .setAction("Action", null).show();
                     }
                 }
-                )
+        )
         {
-        @Override
+            @Override
             protected Map<String,String> getParams(){
-            Map<String,String> params = new HashMap<String,String>();
-            params.put("user_name",user.getText().toString());
-            params.put("user_pass",pass.getText().toString());
-            return params;
-        }
+                Map<String,String> params = new HashMap<String,String>();
+                obj.onTokenRefresh();
+                params.put("user_name",user.getText().toString());
+                params.put("user_pass",pass.getText().toString());
+                params.put("uuid",obj.getToken());
+                params.put("platform","1");
+                //System.out.print("\nNOTIFICACIONES TOKEN "+obj.getToken()+"\n");
+                return params;
+            }
         };
         queue.add(stringRequest);
 
@@ -172,10 +172,5 @@ public class LoginActivity extends AppCompatActivity {
             ft.commit();
         }
     }
-
-
-
-
-
 }
 

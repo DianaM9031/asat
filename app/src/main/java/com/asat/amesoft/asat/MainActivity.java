@@ -17,12 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.asat.amesoft.asat.Tools.MyFirebaseInstanceIDService;
 import com.asat.amesoft.asat.Tools.Tools;
 import com.asat.amesoft.asat.Tools.VolleySingleton;
 import com.asat.amesoft.asat.fragments.AboutFragment;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
 
     private static final int MY_PERMISSIONS_EXTERNAL_STORAGE = 1 ;
     Toolbar toolbar;
+    TextView mTitle;
     private SharedPreferences sharedPref;
 
     @Override
@@ -52,12 +55,14 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.menu_title);
+        //toolbar.setTitle(R.string.menu_title);
+        mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText(R.string.menu_title);
         setSupportActionBar(toolbar);
 
 
         sharedPref = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        String language = sharedPref.getString("language", "en");
+        String language = sharedPref.getString("language", "es");
         Tools.changeLanguage(language, this);
 
 
@@ -118,29 +123,30 @@ public class MainActivity extends AppCompatActivity{
         File rec = new File(asatRoot.getPath() + "/RECORD");
         File img = new File(asatRoot.getPath() + "/HOSPITAL");
 
-            if (!asatRoot.exists()) {
-                asatRoot.mkdirs();
-                if (!advi.exists())
-                    advi.mkdirs();
-                if (!rec.exists())
-                    rec.mkdirs();
-            }
+        if (!asatRoot.exists()) {
+            asatRoot.mkdirs();
+            if (!advi.exists())
+                advi.mkdirs();
+            if (!rec.exists())
+                rec.mkdirs();
+        }
 
-            Tools.setAsatRoot(asatRoot.getPath());
+        Tools.setAsatRoot(asatRoot.getPath());
 
-            File hos_logo = new File(Tools.getAsatRoot() + "hos_logo");
-            if (!hos_logo.exists()) {
-                getHospitalLogo(Tools.getToken(), Tools.hospital);
-            }
+        File hos_logo = new File(Tools.getAsatRoot() + "hos_logo");
+        if (!hos_logo.exists()) {
+            getHospitalLogo(Tools.getToken(), Tools.hospital);
+        }
 
     }
 
     public void goHospital(View view){
-       // Log.v("STATIC TOKEN",token);
+        // Log.v("STATIC TOKEN",token);
 
         Fragment f = new HospitalFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.hospital_title);
+        //toolbar.setTitle(R.string.hospital_title);
+        mTitle.setText(R.string.hospital_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
@@ -153,35 +159,40 @@ public class MainActivity extends AppCompatActivity{
     public void goRecord(View view){
         Fragment f = new RecordFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.record_title);
+        //toolbar.setTitle(R.string.record_title);
+        mTitle.setText(R.string.record_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goAdvices(View view){
         Fragment f = new AdvicesFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.advices_title);
+        //toolbar.setTitle(R.string.advices_title);
+        mTitle.setText(R.string.advices_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goSettings(View view){
         Fragment f = new SettingsFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.settings_title);
+        //toolbar.setTitle(R.string.settings_title);
+        mTitle.setText(R.string.settings_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goAbout(View view){
         Fragment f = new AboutFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.about_title);
+        //toolbar.setTitle(R.string.about_title);
+        mTitle.setText(R.string.about_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
     public void goNotifications(View view){
         Fragment f = new NotificationsFragment();
         change_content(f,true);
-        toolbar.setTitle(R.string.notifications_title);
+        //toolbar.setTitle(R.string.notifications_title);
+        mTitle.setText(R.string.notifications_title);
         keepSession(Tools.getToken(),Tools.keep);
     }
 
@@ -228,8 +239,9 @@ public class MainActivity extends AppCompatActivity{
         FragmentTransaction ft;
 
         if(f.getClass().equals(MenuFragment.class)){
-            toolbar.setTitle(R.string.menu_title);
-           // toolbar.setNavigationIcon(null);
+            //toolbar.setTitle(R.string.menu_title);
+            mTitle.setText(R.string.menu_title);
+            // toolbar.setNavigationIcon(null);
         }
         else{
             toolbar.setNavigationIcon(+R.drawable.ic_menu_black_24dp);
@@ -240,7 +252,7 @@ public class MainActivity extends AppCompatActivity{
             ft.addToBackStack(null).commit();
         }
         else{
-         ft.commit(); //
+            ft.commit(); //
         }
     }
 
@@ -288,7 +300,7 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(String response) {
 
-                         Log.v("GET HOSPITAL LOGO",response);
+                        Log.v("GET HOSPITAL LOGO",response);
                         //Log.v("HosRes",response.substring(response.length()/2+2200,response.length()));
                         processHospitalLogo(response);
 
@@ -328,7 +340,7 @@ public class MainActivity extends AppCompatActivity{
             Log.v("hos response",jsonObject.names().toString());
             if(result.equals("OK")){
                 center_logo=jsonObject.getString("center_logo");
-                    Tools.saveFile(center_logo,"hos_logo.png",Tools.getAsatRoot());
+                Tools.saveFile(center_logo,"hos_logo.png",Tools.getAsatRoot());
 
 
             }
